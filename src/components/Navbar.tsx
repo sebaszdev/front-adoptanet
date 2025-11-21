@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -11,8 +12,8 @@ const Navbar = () => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink>
-              <a href="#">Catalogo</a>
+            <NavigationMenuLink asChild>
+              <Link to="/">Catalogo</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
