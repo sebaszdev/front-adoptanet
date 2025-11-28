@@ -12,7 +12,7 @@ const Navbar = () => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink asChild>
+            <NavigationMenuLink asChild className="rounded-md">
               <Link to="/">Catalogo</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>

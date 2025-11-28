@@ -1,11 +1,13 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Link } from "react-router";
 import { Dog, UserRoundCheck, UserRoundPlus } from "lucide-react";
+import heroImg from "@/assets/hero-img.jpeg";
+import acc1Img from "@/assets/acc-1-img.jpeg";
+import acc2Img from "@/assets/acc-2-img.jpeg";
+import acc3Img from "@/assets/acc-3-img.jpeg";
+import accDefaultImg from "@/assets/acc-default-img.jpeg";
 import {
   Card,
   CardContent,
@@ -19,26 +21,29 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-function App() {
+const App = () => {
   const [accItem, setAccItem] = useState<"acc-1" | "acc-2" | "acc-3">("acc-1");
 
   const items = [
     {
-      icon: <Dog size={64} className="mx-auto" />,
+      icon: <Dog size={64} color="#733E04" className="mx-auto" />,
       title: "Explora nuestro catalogo de animales",
       body: "Explora nuestro catalogo de animales para encontrar a tu proximo compañero de vida",
+      route: "/catalog",
       button: "Ir a catalogo",
     },
     {
-      icon: <UserRoundCheck size={64} className="mx-auto" />,
+      icon: <UserRoundCheck size={64} color="#1E66F5" className="mx-auto" />,
       title: "Inicia sesión",
       body: "¿Ya tienes una cuenta? Inicia sesión para empezar a ver animales que estan esperando un nuevo hogar",
+      route: "/login",
       button: "Iniciar sesión",
     },
     {
-      icon: <UserRoundPlus size={64} className="mx-auto" />,
+      icon: <UserRoundPlus size={64} color="#D20F39" className="mx-auto" />,
       title: "Registrate",
       body: "¿No tienes una cuenta? Registrate para empezar a interactuar con rescatistas y fundaciones",
+      route: "/signup",
       button: "Registrarse",
     },
   ];
@@ -54,13 +59,14 @@ function App() {
           <AspectRatio ratio={4 / 1} className="w-full">
             <div
               className="w-full h-full flex flex-col flex-wrap justify-end pb-10
-              bg-[url(https://images.pexels.com/photos/45170/kittens-cat-cat-puppy-rush-45170.jpeg)]
+              bg-[url(./assets/home-img.jpeg)]
               bg-cover bg-no-repeat bg-center border-b-10"
+              style={{ backgroundImage: `url(${heroImg})` }}
             >
-              <h1 className="scroll-m-20 text-center text-6xl font-extrabold tracking-tight text-balance">
+              <h1 className="scroll-m-20 text-center text-background text-6xl font-extrabold tracking-tight text-balance">
                 AdoptaNet
               </h1>
-              <p className="text-center leading-7 [&:not(:first-child)]:mt-6">
+              <p className="text-center leading-7 text-background [&:not(:first-child)]:mt-6">
                 Encuentra tu proximo mejor amigo
               </p>
             </div>
@@ -82,13 +88,13 @@ function App() {
               </CardContent>
               <CardFooter>
                 <Button className="w-full">
-                  <Link to="/">{item.button}</Link>
+                  <Link to={item.route}>{item.button}</Link>
                 </Button>
               </CardFooter>
             </Card>
           ))}
         </section>
-        <section className="py-10">
+        <section className="py-10 flex flex-col gap-y-10">
           <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
             ¿Cómo adoptar?
           </h2>
@@ -96,20 +102,23 @@ function App() {
             <AspectRatio ratio={4 / 3} className="w-xl mx-auto">
               {accItem === "acc-1" ? (
                 <div className="w-full h-full rounded-lg
-                bg-[url(https://images.pexels.com/photos/34311008/pexels-photo-34311008.jpeg)]
-                bg-cover bg-no-repeat bg-center" />
+                bg-[url(./assets/acc-1-img.jpeg)]
+                bg-cover bg-no-repeat bg-center" 
+                style={{ backgroundImage: `url(${acc1Img})` }} />
               ) : accItem === "acc-2" ? (
                 <div className="w-full h-full rounded-lg
-                bg-[url(https://images.pexels.com/photos/32452143/pexels-photo-32452143.jpeg)]
-                bg-cover bg-no-repeat bg-center" />
+                bg-[url(./assets/acc-2-img.jpeg)]
+                bg-cover bg-no-repeat bg-center" 
+                style={{ backgroundImage: `url(${acc2Img})` }} />
               ) : accItem === "acc-3" ? (
                 <div className="w-full h-full rounded-lg
-                bg-[url(https://images.pexels.com/photos/26263124/pexels-photo-26263124.jpeg)]
-                bg-cover bg-no-repeat bg-center" />
+                bg-[url(./assets/acc-3-img.jpeg)]
+                bg-cover bg-no-repeat bg-center" 
+                style={{ backgroundImage: `url(${acc3Img})` }} />
               ) : (
                 <div className="w-full h-full rounded-lg
-                bg-[url(https://images.pexels.com/photos/12917058/pexels-photo-12917058.jpeg)]
-                bg-cover bg-no-repeat bg-center" />
+                bg-cover bg-no-repeat bg-center"
+                style={{ backgroundImage: `url(${accDefaultImg})` }} />
               )}
             </AspectRatio>
             <div className="flex flex-col justify-center pr-10">
@@ -154,4 +163,5 @@ function App() {
     </>
   );
 }
+
 export default App;
