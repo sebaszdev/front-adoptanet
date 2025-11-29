@@ -2,7 +2,7 @@ import { Outlet } from "react-router";
 import Footer from "@/components/Footer";
 import Navbar from "./components/Navbar";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup, ButtonGroupSeparator } from "./components/ui/button-group";
+import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 import { Link } from "react-router";
 import logo from "@/assets/logo.png";
 import {
@@ -15,7 +15,7 @@ const Layout = () => {
   return (
     <>
       <header className="flex justify-around py-3 border-b-4">
-        <Link to="/">
+        <Link to="/" className="flex flex-col justify-center">
           <Avatar>
             <AvatarImage src={logo} alt="Logo de AdoptaNet" />
             <AvatarFallback>AdoptaNet</AvatarFallback>

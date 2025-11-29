@@ -59,7 +59,6 @@ const App = () => {
           <AspectRatio ratio={4 / 1} className="w-full">
             <div
               className="w-full h-full flex flex-col flex-wrap justify-end pb-10
-              bg-[url(./assets/home-img.jpeg)]
               bg-cover bg-no-repeat bg-center border-b-10"
               style={{ backgroundImage: `url(${heroImg})` }}
             >
@@ -102,17 +101,14 @@ const App = () => {
             <AspectRatio ratio={4 / 3} className="w-xl mx-auto">
               {accItem === "acc-1" ? (
                 <div className="w-full h-full rounded-lg
-                bg-[url(./assets/acc-1-img.jpeg)]
                 bg-cover bg-no-repeat bg-center" 
                 style={{ backgroundImage: `url(${acc1Img})` }} />
               ) : accItem === "acc-2" ? (
                 <div className="w-full h-full rounded-lg
-                bg-[url(./assets/acc-2-img.jpeg)]
                 bg-cover bg-no-repeat bg-center" 
                 style={{ backgroundImage: `url(${acc2Img})` }} />
               ) : accItem === "acc-3" ? (
                 <div className="w-full h-full rounded-lg
-                bg-[url(./assets/acc-3-img.jpeg)]
                 bg-cover bg-no-repeat bg-center" 
                 style={{ backgroundImage: `url(${acc3Img})` }} />
               ) : (

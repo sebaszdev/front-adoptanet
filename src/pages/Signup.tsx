@@ -1,68 +1,45 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import signupImg from "@/assets/signup-img.jpg";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Form from "@/components/Form";
 import { Link } from "react-router";
 
-export default function Signup() {
+const Signup = () => {
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <Card>
-      <CardHeader>
-        <CardTitle>Crea una cuenta</CardTitle>
-        <CardDescription>
-              Ingresa tus datos para registrarte
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="name">Nombre</FieldLabel>
-              <Input id="name" type="text" required />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="email">Correo electronico</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                placeholder="usuario@ejemplo.com"
-                required
-              />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="password">Contraseña</FieldLabel>
-              <Input id="password" type="password" required />
-              <FieldDescription>
-                    Debe ser al menos de 8 caracteres
-              </FieldDescription>
-            </Field>
-            <FieldGroup>
-              <Field>
-                <Button type="submit">Crear cuenta</Button>
-                <FieldDescription className="px-6 text-center">
-                  ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link>
-                </FieldDescription>
-              </Field>
-            </FieldGroup>
-          </FieldGroup>
-        </form>
-      </CardContent>
-    </Card>
+    <>
+      <div className="grid grid-cols-2 h-full">
+        <div className="flex flex-col">
+          <div className="flex flex-col flex-1 items-center justify-center gap-y-2 py-4">
+            <div className="flex flex-col">
+              <p className="leading-7">
+                Registrate como un publicante o como una entidad
+              </p>
+            </div>
+            <Tabs defaultValue="publicante" className="w-full max-w-md">
+              <TabsList className="w-md">
+                <TabsTrigger value="publicante">Publicante</TabsTrigger>
+                <TabsTrigger value="entidad">Entidad</TabsTrigger>
+              </TabsList>
+              <TabsContent value="publicante">
+                <Form rol="publicante" onSubmit={(_) => console.log("publicante")} />
+              </TabsContent>
+              <TabsContent value="entidad">
+                <Form rol="entidad" onSubmit={(_) => console.log("entidad")} />
+              </TabsContent>
+            </Tabs>
+            <div className="text-center">
+              <p className="text-muted-foreground text-sm">
+                ¿Ya tienes cuenta? <Link to="/login" className="underline underline-offset-4 hover:text-primary">Inicia Sesión</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+        <AspectRatio ratio={16 / 9}>
+          <img src={signupImg} className="absolute inset-0 h-full w-full object-cover" />
+        </AspectRatio>
       </div>
-    </div>
+    </>
   );
-}
+};
 
+export default Signup;

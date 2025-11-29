@@ -12,8 +12,8 @@ const Navbar = () => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink asChild className="rounded-md">
-              <Link to="/">Catalogo</Link>
+            <NavigationMenuLink asChild className="rounded-lg">
+              <Link to="/catalog">Catalogo</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
