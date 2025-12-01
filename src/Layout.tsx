@@ -10,8 +10,12 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
+import { useAuth } from "@/context/useAuth";
+import { UserRound } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const Layout = () => {
+  const { user, logout } = useAuth();
   return (
     <>
       <header className="flex justify-around py-3 border-b-4">
@@ -22,15 +26,30 @@ const Layout = () => {
           </Avatar>
         </Link>
         <Navbar />
-        <ButtonGroup>
-          <Button className="hover:bg-accent">
-            <Link to="/signup">Registrarse</Link>
-          </Button>
-          <ButtonGroupSeparator />
-          <Button className="hover:bg-accent">
-            <Link to="/login">Iniciar sesión</Link>
-          </Button>
-        </ButtonGroup>
+        { user ? (
+          <div className="flex gap-x-2">
+            <div className="flex flex-wrap gap-x-2 content-center">
+              <UserRound />
+              <p className="leading-7">
+                {user.nombre}
+              </p>
+            </div>
+            <Separator orientation="vertical" className="bg-foreground" />
+            <Button variant="destructive" onClick={logout} className="cursor-pointer">
+              Cerrar sesión
+            </Button>
+          </div>
+        ) : (
+          <ButtonGroup>
+            <Button className="hover:bg-accent">
+              <Link to="/signup">Registrarse</Link>
+            </Button>
+            <ButtonGroupSeparator />
+            <Button className="hover:bg-accent">
+              <Link to="/login">Iniciar sesión</Link>
+            </Button>
+          </ButtonGroup>
+        )}
       </header>
       <main className="flex-1">
         <Outlet />

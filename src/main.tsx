@@ -1,24 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter } from "react-router";
+import { AuthProvider } from "@/context/AuthContext";
 import './index.css'
-import App from './App.tsx'
-import Login from './pages/Login.tsx';
-import Signup from './pages/Signup.tsx';
-import Layout from '@/Layout';
-import Catalog from './pages/Catalog.tsx';
+import App from '@/App';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<App />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/catalog" element={<Catalog />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
-)
+);

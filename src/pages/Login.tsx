@@ -1,6 +1,6 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import loginImg from "@/assets/login-img.jpeg";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import { LoginSchema } from "@/schemas/loginSchema";
@@ -9,8 +9,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Field, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/useAuth";
 
 const Login = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -19,8 +23,15 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
+    try {
+      const { correo, contrasena } = data;
+      await login({ correo, contrasena });
+      // si sale bien chao
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

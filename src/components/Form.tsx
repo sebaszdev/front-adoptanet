@@ -6,14 +6,14 @@ import { PublicanteSchema } from "@/schemas/publicanteSchema";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components//ui/card";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 type EntidadSubmit = z.infer<typeof EntidadSchema>;
 type PublicanteSubmit = z.infer<typeof PublicanteSchema>;
 
 interface Props {
   rol: "publicante" | "entidad";
-  onSubmit: (data: EntidadSubmit | PublicanteSubmit) => void;
+  onSubmit: (data: EntidadSubmit | PublicanteSubmit) => any;
 }
 
 const Form = ({ rol, onSubmit }: Props) => {

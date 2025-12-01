@@ -2,9 +2,47 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import signupImg from "@/assets/signup-img.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Form from "@/components/Form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import * as z from "zod";
+import type { PublicanteSchema } from "@/schemas/publicanteSchema";
+import type { EntidadSchema } from "@/schemas/entidadSchema";
+import { useAuth } from "@/context/useAuth";
+import { AuthService } from "@/api/auth.service";
 
 const Signup = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const onSubmitPublicante = async (data: z.infer<typeof PublicanteSchema>) => {
+    try {
+      const res = await AuthService.registerPublicante(data);
+      // se hizo el registro
+      if (res) {
+        const { correo, contrasena } = data;
+        login({ correo, contrasena });
+        // se hizo login
+        navigate("/");
+      }
+    } catch (err) {
+      console.error("malo");
+    }
+  }
+
+  const onSubmitEntidad = async (data: z.infer<typeof EntidadSchema>) => {
+    try {
+      const res = await AuthService.registerEntidad(data);
+      // se hizo el registro
+      if (res) {
+        const { correo, contrasena } = data;
+        login({ correo, contrasena });
+        // se hizo login
+        navigate("/");
+      }
+    } catch (err) {
+      console.error("malo");
+    }
+  }
+
   return (
     <>
       <div className="grid grid-cols-2 h-full">
@@ -21,10 +59,10 @@ const Signup = () => {
                 <TabsTrigger value="entidad">Entidad</TabsTrigger>
               </TabsList>
               <TabsContent value="publicante">
-                <Form rol="publicante" onSubmit={(_) => console.log("publicante")} />
+                <Form rol="publicante" onSubmit={onSubmitPublicante} />
               </TabsContent>
               <TabsContent value="entidad">
-                <Form rol="entidad" onSubmit={(_) => console.log("entidad")} />
+                <Form rol="entidad" onSubmit={onSubmitEntidad} />
               </TabsContent>
             </Tabs>
             <div className="text-center">
