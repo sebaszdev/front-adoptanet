@@ -24,7 +24,7 @@ const Signup = () => {
         navigate("/");
       }
     } catch (err) {
-      console.error("malo");
+      console.error(err);
     }
   }
 
@@ -39,7 +39,7 @@ const Signup = () => {
         navigate("/");
       }
     } catch (err) {
-      console.error("malo");
+      console.error(err);
     }
   }
 

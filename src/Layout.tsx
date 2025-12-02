@@ -18,14 +18,16 @@ const Layout = () => {
   const { user, logout } = useAuth();
   return (
     <>
-      <header className="flex justify-around py-3 border-b-4">
-        <Link to="/" className="flex flex-col justify-center">
-          <Avatar>
-            <AvatarImage src={logo} alt="Logo de AdoptaNet" />
-            <AvatarFallback>AdoptaNet</AvatarFallback>
-          </Avatar>
-        </Link>
-        <Navbar />
+      <header className="flex justify-between py-3 px-6 border-b-2 shadow-sm">
+        <div className="flex gap-x-6">
+          <Link to="/" className="flex flex-col justify-center">
+            <Avatar>
+              <AvatarImage src={logo} alt="Logo de AdoptaNet" />
+              <AvatarFallback>AdoptaNet</AvatarFallback>
+            </Avatar>
+          </Link>
+          <Navbar />
+        </div>
         { user ? (
           <div className="flex gap-x-2">
             <div className="flex flex-wrap gap-x-2 content-center">
