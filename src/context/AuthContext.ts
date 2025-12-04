@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import * as z from "zod";
-import { LoginSchema } from "@/schemas/loginSchema";
+import { LoginSchema } from "@/schemas/userSchema";
 
 interface AuthContextType {
   user: any;

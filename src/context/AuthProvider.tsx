@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { AuthService } from "@/api/auth.service";
 import * as z from "zod";
-import type { LoginSchema } from "@/schemas/loginSchema";
+import type { LoginSchema } from "@/schemas/userSchema";
 import { AuthContext } from "@/context/AuthContext";
+import { useNavigate } from "react-router";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const login = async ({ correo, contrasena }: z.infer<typeof LoginSchema>) => {
     try {
@@ -21,9 +23,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const me = await AuthService.me(t);
       setUser(me);
 
-    } catch (err: any) {
-      console.error("Login error:", err);
-      throw err; // re-lanza para que el form pueda manejarlo
+    } catch (err) {
+      throw err;
     }
   };
 
@@ -31,17 +32,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("token");
     setUser(null);
     setToken(null);
+    navigate("/", { replace: true });
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem("token");
-    if (!stored) return setLoading(false);
+    const fetchUser = async () => {
+      const stored = localStorage.getItem("token");
+      if (!stored) return setLoading(false);
 
-    setToken(stored);
+      const res = await AuthService.me(stored);
+      if (res) { // el token no esta vencido        
+        setUser(res);
+        setToken(stored);
+      } else { // token vencido, borrarlo
+        localStorage.removeItem('token');
+      }
 
-    AuthService.me(stored)
-      .then(u => setUser(u))
-      .finally(() => setLoading(false));
+      setLoading(false);
+    }
+
+    fetchUser();
   }, []);
 
   return (

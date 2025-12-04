@@ -2,15 +2,16 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import signupImg from "@/assets/signup-img.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Form from "@/components/Form";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, Navigate } from "react-router";
 import * as z from "zod";
-import type { PublicanteSchema } from "@/schemas/publicanteSchema";
-import type { EntidadSchema } from "@/schemas/entidadSchema";
+import type { PublicanteSchema } from "@/schemas/userSchema";
+import type { EntidadSchema } from "@/schemas/userSchema";
 import { useAuth } from "@/context/useAuth";
 import { AuthService } from "@/api/auth.service";
+import { toast } from "sonner";
 
 const Signup = () => {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const onSubmitPublicante = async (data: z.infer<typeof PublicanteSchema>) => {
@@ -19,12 +20,13 @@ const Signup = () => {
       // se hizo el registro
       if (res) {
         const { correo, contrasena } = data;
-        login({ correo, contrasena });
+        await login({ correo, contrasena });
         // se hizo login
         navigate("/");
       }
     } catch (err) {
-      console.error(err);
+      if (err instanceof TypeError && err.message === "Failed to fetch") toast.error("Error con la API"); 
+      
     }
   }
 
@@ -34,17 +36,16 @@ const Signup = () => {
       // se hizo el registro
       if (res) {
         const { correo, contrasena } = data;
-        login({ correo, contrasena });
+        await login({ correo, contrasena });
         // se hizo login
         navigate("/");
       }
     } catch (err) {
-      console.error(err);
+      if (err instanceof TypeError && err.message === "Failed to fetch") toast.error("Error con la API"); 
     }
   }
 
-  return (
-    <>
+  return isAuthenticated ? <Navigate to="/" replace /> : (
       <div className="grid grid-cols-2 h-full">
         <div className="flex flex-col">
           <div className="flex flex-col flex-1 items-center justify-center gap-y-2 py-4">
@@ -76,7 +77,6 @@ const Signup = () => {
           <img src={signupImg} className="absolute inset-0 h-full w-full object-cover" />
         </AspectRatio>
       </div>
-    </>
   );
 };
 

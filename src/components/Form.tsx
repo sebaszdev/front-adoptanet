@@ -1,22 +1,25 @@
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EntidadSchema } from "@/schemas/entidadSchema";
-import { PublicanteSchema } from "@/schemas/publicanteSchema";
+import { EntidadSchema } from "@/schemas/userSchema";
+import { PublicanteSchema } from "@/schemas/userSchema";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components//ui/card";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-type EntidadSubmit = z.infer<typeof EntidadSchema>;
-type PublicanteSubmit = z.infer<typeof PublicanteSchema>;
 
-interface Props {
-  rol: "publicante" | "entidad";
-  onSubmit: (data: EntidadSubmit | PublicanteSubmit) => any;
+interface EntidadProps {
+  rol: "entidad";
+  onSubmit: (data: z.infer<typeof EntidadSchema>) => Promise<void>;
 }
 
-const Form = ({ rol, onSubmit }: Props) => {
+interface PublicanteProps {
+  rol: "publicante";
+  onSubmit: (data: z.infer<typeof PublicanteSchema>) => Promise<void>;
+}
+
+const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
   const schema = rol === "publicante" ? PublicanteSchema : EntidadSchema;
   const doc = rol === "publicante" ? "cc" : "nit";
 
@@ -51,7 +54,7 @@ const Form = ({ rol, onSubmit }: Props) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form id="form-signup" onSubmit={form.handleSubmit(onSubmit)}>
+        <form id="form-signup" onSubmit={form.handleSubmit(onSubmit as any)}>
           <FieldGroup className="gap-4">
             <Controller
               name="nombre"

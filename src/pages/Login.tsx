@@ -1,18 +1,19 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import loginImg from "@/assets/login-img.jpeg";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, Navigate } from "react-router";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
-import { LoginSchema } from "@/schemas/loginSchema";
+import { LoginSchema } from "@/schemas/userSchema";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Field, FieldGroup, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/useAuth";
+import { toast } from "sonner";
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -30,11 +31,12 @@ const Login = () => {
       // si sale bien chao
       navigate("/");
     } catch (err) {
-      console.error(err);
+      if (err instanceof TypeError && err.message === "Failed to fetch") toast.error("Error con la API"); 
+      
     }
   };
 
-  return (
+  return isAuthenticated ? <Navigate to="/" replace /> : (
     <div className="grid grid-cols-2 h-full">
         <AspectRatio ratio={16 / 9}>
           <img src={loginImg} className="absolute inset-0 h-full w-full object-cover" />
@@ -111,7 +113,6 @@ const Login = () => {
         </div>
       </div>
       </div>
-
   );
 };
 

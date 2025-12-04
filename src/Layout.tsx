@@ -13,12 +13,13 @@ import {
 import { useAuth } from "@/context/useAuth";
 import { UserRound } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { Toaster } from "@/components/ui/sonner";
 
 const Layout = () => {
   const { user, logout } = useAuth();
   return (
     <>
-      <header className="flex justify-between py-3 px-6 border-b-2 shadow-sm">
+      <header className="flex justify-between py-3 px-10 border-b-2 shadow-sm">
         <div className="flex gap-x-6">
           <Link to="/" className="flex flex-col justify-center">
             <Avatar>
@@ -57,6 +58,7 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
+      <Toaster richColors/>
     </>
   );
 }

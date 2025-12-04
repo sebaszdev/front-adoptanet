@@ -20,11 +20,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useAuth } from "@/context/useAuth";
 
 const Home = () => {
+  const { isAuthenticated } = useAuth();
   const [accItem, setAccItem] = useState<"acc-1" | "acc-2" | "acc-3">("acc-1");
 
-  const items = [
+  const cards = [
     {
       icon: <Dog size={64} color="#733E04" className="mx-auto" />,
       title: "Explora nuestro catalogo de animales",
@@ -50,7 +52,7 @@ const Home = () => {
 
   const accordionHandler = (value: "acc-1" | "acc-2" | "acc-3") => {
     setAccItem(value);
-  }
+  };
 
   return (
     <>
@@ -70,27 +72,27 @@ const Home = () => {
             </div>
           </AspectRatio>
         </div>
-        <section className="bg-muted flex justify-center pt-30 pb-20 gap-x-10">
-          {items.map((item, indx) => (
+        <section className="bg-muted flex flex-wrap justify-center pt-30 pb-20 gap-10">
+          {!isAuthenticated ? cards.map((card, indx) => (
             <Card key={indx} className="w-full max-w-sm">
               <CardHeader> 
-                {item.icon}
+                {card.icon}
               </CardHeader>
               <CardContent>
                 <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
-                  {item.title}
+                  {card.title}
                 </h2>
                 <p className="leading-7 text-center [&:not(:first-child)]:mt-6">
-                  {item.body}
+                  {card.body}
                 </p>
               </CardContent>
               <CardFooter>
                 <Button className="w-full">
-                  <Link to={item.route}>{item.button}</Link>
+                  <Link to={card.route}>{card.button}</Link>
                 </Button>
               </CardFooter>
             </Card>
-          ))}
+          )): <p>Autenticado</p>}
         </section>
         <section className="py-10 flex flex-col gap-y-10">
           <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
@@ -99,21 +101,13 @@ const Home = () => {
           <div className="grid grid-cols-2">
             <AspectRatio ratio={4 / 3} className="w-xl mx-auto">
               {accItem === "acc-1" ? (
-                <div className="w-full h-full rounded-lg
-                bg-cover bg-no-repeat bg-center" 
-                style={{ backgroundImage: `url(${acc1Img})` }} />
+                <img src={acc1Img} className="w-full h-full object-cover rounded-lg" />
               ) : accItem === "acc-2" ? (
-                <div className="w-full h-full rounded-lg
-                bg-cover bg-no-repeat bg-center" 
-                style={{ backgroundImage: `url(${acc2Img})` }} />
+                <img src={acc2Img} className="w-full h-full object-cover rounded-lg" />
               ) : accItem === "acc-3" ? (
-                <div className="w-full h-full rounded-lg
-                bg-cover bg-no-repeat bg-center" 
-                style={{ backgroundImage: `url(${acc3Img})` }} />
+                <img src={acc3Img} className="w-full h-full object-cover rounded-lg" />
               ) : (
-                <div className="w-full h-full rounded-lg
-                bg-cover bg-no-repeat bg-center"
-                style={{ backgroundImage: `url(${accDefaultImg})` }} />
+                <img src={accDefaultImg} className="w-full h-full object-cover rounded-lg" />
               )}
             </AspectRatio>
             <div className="flex flex-col justify-center pr-10">
