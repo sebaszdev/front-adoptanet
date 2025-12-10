@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Link } from "react-router";
 import { Dog, UserRoundCheck, UserRoundPlus } from "lucide-react";
-import heroImg from "@/assets/hero-img.jpeg";
+import { useState } from "react";
+import { Link } from "react-router";
 import acc1Img from "@/assets/acc-1-img.jpeg";
 import acc2Img from "@/assets/acc-2-img.jpeg";
 import acc3Img from "@/assets/acc-3-img.jpeg";
 import accDefaultImg from "@/assets/acc-default-img.jpeg";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import heroImg from "@/assets/hero-img.jpeg";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { useAuth } from "@/context/useAuth";
 
 const Home = () => {
@@ -56,28 +56,30 @@ const Home = () => {
 
   return (
     <>
-        <div className="w-full">
-          <AspectRatio ratio={4 / 1} className="w-full">
-            <div
-              className="w-full h-full flex flex-col flex-wrap justify-end pb-10
+      <div className="w-full">
+        <AspectRatio ratio={4 / 1} className="w-full">
+          <div
+            className="w-full h-full flex flex-col flex-wrap justify-end pb-10
               bg-cover bg-no-repeat bg-center border-b-10"
-              style={{ backgroundImage: `url(${heroImg})` }}
+            style={{ backgroundImage: `url(${heroImg})` }}
+          >
+            <h1 className="scroll-m-20 text-center text-background text-6xl font-extrabold tracking-tight text-balance">
+              AdoptaNet
+            </h1>
+            <p className="text-center leading-7 text-background [&:not(:first-child)]:mt-6">
+              Encuentra tu proximo mejor amigo
+            </p>
+          </div>
+        </AspectRatio>
+      </div>
+      <section className="bg-muted flex flex-wrap justify-center pt-30 pb-20 gap-10">
+        {!isAuthenticated ? (
+          cards.map(card => (
+            <Card
+              key={card.title}
+              className="w-full max-w-sm flex flex-col justify-between"
             >
-              <h1 className="scroll-m-20 text-center text-background text-6xl font-extrabold tracking-tight text-balance">
-                AdoptaNet
-              </h1>
-              <p className="text-center leading-7 text-background [&:not(:first-child)]:mt-6">
-                Encuentra tu proximo mejor amigo
-              </p>
-            </div>
-          </AspectRatio>
-        </div>
-        <section className="bg-muted flex flex-wrap justify-center pt-30 pb-20 gap-10">
-          {!isAuthenticated ? cards.map((card, indx) => (
-            <Card key={indx} className="w-full max-w-sm">
-              <CardHeader> 
-                {card.icon}
-              </CardHeader>
+              <CardHeader>{card.icon}</CardHeader>
               <CardContent>
                 <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
                   {card.title}
@@ -92,65 +94,97 @@ const Home = () => {
                 </Button>
               </CardFooter>
             </Card>
-          )): <p>Autenticado</p>}
-        </section>
-        <section className="py-10 flex flex-col gap-y-10">
-          <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
-            ¿Cómo adoptar?
-          </h2>
-          <div className="grid grid-cols-2">
-            <AspectRatio ratio={4 / 3} className="w-xl mx-auto">
-              {accItem === "acc-1" ? (
-                <img src={acc1Img} className="w-full h-full object-cover rounded-lg" />
-              ) : accItem === "acc-2" ? (
-                <img src={acc2Img} className="w-full h-full object-cover rounded-lg" />
-              ) : accItem === "acc-3" ? (
-                <img src={acc3Img} className="w-full h-full object-cover rounded-lg" />
-              ) : (
-                <img src={accDefaultImg} className="w-full h-full object-cover rounded-lg" />
-              )}
-            </AspectRatio>
-            <div className="flex flex-col justify-center pr-10">
-              <Accordion
-                type="single"
-                collapsible
-                className="w-full"
-                defaultValue="acc-1"
-                onValueChange={accordionHandler}
-              >
-                <AccordionItem value="acc-1">
-                  <AccordionTrigger className="font-semibold text-xl">Busca tu compañero</AccordionTrigger>
-                  <AccordionContent className="flex flex-col gap-4">
-                    <p className="leading-7 text-base [&:not(:first-child)]:mt-6">
-                      Accede al catalogo de animales para buscar el proximo acompañante en tu vida. Puedes buscar por especie o raza para hacer más facil la búsqueda de la mascota que quieres.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="acc-2">
-                  <AccordionTrigger className="font-semibold text-xl">Postulate</AccordionTrigger>
-                  <AccordionContent className="flex flex-col gap-4">
-                    <p className="leading-7 text-base [&:not(:first-child)]:mt-6">
-                      Una vez encuentres la mascota ideal puedes postularte con tus datos para ponerte en contacto con la persona o la fundación correspondiente.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="acc-3">
-                  <AccordionTrigger className="font-semibold text-xl">Adopta un compañero de vida</AccordionTrigger>
-                  <AccordionContent className="flex flex-col gap-4">
-                    <p className="leading-7 text-base [&:not(:first-child)]:mt-6">
-                      Despúes de postularte sigues tu proceso de adopción con la persona o fundación correspondiente, para finalmente adoptar a tu proximo compañero de vida.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-              <p className="text-destructive leading-7 font-semibold [&:not(:first-child)]:mt-6">
-                AdoptaNet nunca te va a pedir plata durante el proceso de adopción de una mascota.
-              </p>
-            </div>
+          ))
+        ) : (
+          <p>Autenticado</p>
+        )}
+      </section>
+      <section className="py-10 flex flex-col gap-y-10">
+        <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
+          ¿Cómo adoptar?
+        </h2>
+        <div className="grid grid-cols-2">
+          <AspectRatio ratio={4 / 3} className="w-xl mx-auto">
+            {accItem === "acc-1" ? (
+              <img
+                src={acc1Img}
+                className="w-full h-full object-cover rounded-lg"
+                alt="Perros detras de una reja"
+              />
+            ) : accItem === "acc-2" ? (
+              <img
+                src={acc2Img}
+                className="w-full h-full object-cover rounded-lg"
+                alt="Perrp sosteniendo un cartel que tiene escrito 'ADOPTAME'"
+              />
+            ) : accItem === "acc-3" ? (
+              <img
+                src={acc3Img}
+                className="w-full h-full object-cover rounded-lg"
+                alt="Una mujer cargando y besando a un cachorro"
+              />
+            ) : (
+              <img
+                src={accDefaultImg}
+                className="w-full h-full object-cover rounded-lg"
+                alt="Perro en una jaula sonriendo a la camara"
+              />
+            )}
+          </AspectRatio>
+          <div className="flex flex-col justify-center pr-10">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+              defaultValue="acc-1"
+              onValueChange={accordionHandler}
+            >
+              <AccordionItem value="acc-1">
+                <AccordionTrigger className="font-semibold text-xl">
+                  Busca tu compañero
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4">
+                  <p className="leading-7 text-base [&:not(:first-child)]:mt-6">
+                    Accede al catalogo de animales para buscar el proximo
+                    acompañante en tu vida. Puedes buscar por especie o raza
+                    para hacer más facil la búsqueda de la mascota que quieres.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="acc-2">
+                <AccordionTrigger className="font-semibold text-xl">
+                  Postulate
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4">
+                  <p className="leading-7 text-base [&:not(:first-child)]:mt-6">
+                    Una vez encuentres la mascota ideal puedes postularte con
+                    tus datos para ponerte en contacto con la persona o la
+                    fundación correspondiente.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="acc-3">
+                <AccordionTrigger className="font-semibold text-xl">
+                  Adopta un compañero de vida
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4">
+                  <p className="leading-7 text-base [&:not(:first-child)]:mt-6">
+                    Despúes de postularte sigues tu proceso de adopción con la
+                    persona o fundación correspondiente, para finalmente adoptar
+                    a tu proximo compañero de vida.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <p className="text-destructive leading-7 font-semibold [&:not(:first-child)]:mt-6">
+              AdoptaNet nunca te va a pedir plata durante el proceso de adopción
+              de una mascota.
+            </p>
           </div>
-        </section>
+        </div>
+      </section>
     </>
   );
-}
+};
 
 export default Home;

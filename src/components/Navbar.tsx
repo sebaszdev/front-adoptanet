@@ -5,21 +5,28 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import { useAuth } from "@/context/useAuth";
 
 const Navbar = () => {
+  const { isAuthenticated } = useAuth();
   return (
-    <>
-      <NavigationMenu>
-        <NavigationMenuList>
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild className="rounded-lg">
+            <Link to="/catalog">Catalogo</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        {isAuthenticated && (
           <NavigationMenuItem>
             <NavigationMenuLink asChild className="rounded-lg">
-              <Link to="/catalog">Catalogo</Link>
+              <Link to="/animals">Animals</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-    </>
+        )}
+      </NavigationMenuList>
+    </NavigationMenu>
   );
-}
+};
 
 export default Navbar;

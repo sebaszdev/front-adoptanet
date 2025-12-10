@@ -1,60 +1,50 @@
+import type * as z from "zod";
 import { apiFetch } from "@/api/client";
-import { PublicanteSchema, EntidadSchema, LoginSchema } from "@/schemas/userSchema";
-import * as z from "zod";
+import type {
+  EntidadSchema,
+  LoginSchema,
+  PublicanteSchema,
+  ResponseEntidadSchema,
+  ResponsePublicanteSchema,
+} from "@/schemas/userSchema";
 
 export const AuthService = {
-  login: async ({ correo, contrasena }: z.infer<typeof LoginSchema>) => {
-    try {
-      const form = new URLSearchParams();
-      form.append("username", correo);
-      form.append("password", contrasena);
+  login: ({ correo, contrasena }: z.infer<typeof LoginSchema>) => {
+    const form = new URLSearchParams();
+    form.append("username", correo);
+    form.append("password", contrasena);
 
-      return await apiFetch("/token", {
-        method: "POST",
-        body: form,
-      });
-    } catch (err) {
-      throw err;
-    }
+    return apiFetch<{ access_token: string; token_type: string }>("/token", {
+      method: "POST",
+      body: form,
+    });
   },
 
-  registerPublicante: async (data: z.infer<typeof PublicanteSchema>) => {
-    try {
-      return await apiFetch("/CreatePublicante", {
-        method: "POST",
-        body: JSON.stringify(data),
+  registerPublicante: (data: z.infer<typeof PublicanteSchema>) =>
+    apiFetch<z.infer<typeof ResponseEntidadSchema>>("/CreatePublicante", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }),
+
+  registerEntidad: (data: z.infer<typeof EntidadSchema>) =>
+    apiFetch<z.infer<typeof ResponsePublicanteSchema>>("/CreateEntidad", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }),
+
+  me: (token: string) =>
+    apiFetch<z.infer<typeof EntidadSchema> | z.infer<typeof PublicanteSchema>>(
+      "/users/me",
+      {
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      });
-    } catch(err) {
-      throw err;
-    }
-  },
-
-  registerEntidad: async (data: z.infer<typeof EntidadSchema>) => {
-    try {
-      return await apiFetch("/CreateEntidad", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  me: async (token: string) => {
-    try {
-      return await apiFetch("/users/me", {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-    } catch (err) {
-      throw err;
-    }
-  },
+      },
+    ),
 };

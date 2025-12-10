@@ -1,13 +1,13 @@
-const API_URL = import.meta.env.VITE_API_URL 
+const API_URL = import.meta.env.VITE_API_URL;
 
-class ApiError extends Error {
+export class ApiError extends Error {
   status: number;
-  details: any;
+  detail: string;
 
-  constructor(status: number, details: any) {
+  constructor(status: number, detail: string) {
     super(`API Error: ${status}`);
     this.status = status;
-    this.details = details;
+    this.detail = detail;
   }
 }
 
@@ -16,9 +16,9 @@ class ApiError extends Error {
  * (method, body y headers deben ser pasados desde los metodos)
  * @params path: string, options: RequestInit
  */
-export const apiFetch = async <T = any>(
+export const apiFetch = async <T>(
   path: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
 ): Promise<T> => {
   const res = await fetch(`${API_URL}${path}`, {
     ...options,

@@ -1,13 +1,23 @@
-import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EntidadSchema } from "@/schemas/userSchema";
-import { PublicanteSchema } from "@/schemas/userSchema";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components//ui/card";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Controller, useForm } from "react-hook-form";
+import type * as z from "zod";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components//ui/card";
 import { Button } from "@/components/ui/button";
-
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { EntidadSchema, PublicanteSchema } from "@/schemas/userSchema";
 
 interface EntidadProps {
   rol: "entidad";
@@ -28,20 +38,20 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
     defaultValues:
       rol === "publicante"
         ? {
-          nombre: "",
-          correo: "",
-          telefono: "",
-          direccion: "",
-          cc: "",
-          contrasena: "",
+            nombre: "",
+            correo: "",
+            telefono: "",
+            direccion: "",
+            cc: "",
+            contrasena: "",
           }
         : {
-          nombre: "",
-          correo: "",
-          telefono: "",
-          direccion: "",
-          nit: "",
-          contrasena: "",
+            nombre: "",
+            correo: "",
+            telefono: "",
+            direccion: "",
+            nit: "",
+            contrasena: "",
           },
   });
 
@@ -61,9 +71,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-signup-nombre">
-                    Nombre
-                  </FieldLabel>
+                  <FieldLabel htmlFor="form-signup-nombre">Nombre</FieldLabel>
                   <Input
                     {...field}
                     id="form-signup-nombre"
@@ -74,7 +82,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </Field>
-                )}
+              )}
             />
             <Controller
               name="correo"
@@ -95,7 +103,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </Field>
-                )}
+              )}
             />
             <Controller
               name="telefono"
@@ -115,7 +123,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </Field>
-                )}
+              )}
             />
             <Controller
               name="direccion"
@@ -135,7 +143,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </Field>
-                )}
+              )}
             />
             <Controller
               name={doc}
@@ -155,7 +163,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </Field>
-                )}
+              )}
             />
             <Controller
               name="contrasena"
@@ -175,14 +183,18 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
                     <FieldError errors={[fieldState.error]} />
                   )}
                 </Field>
-                )}
+              )}
             />
           </FieldGroup>
         </form>
       </CardContent>
       <CardFooter>
         <Field orientation="horizontal">
-          <Button type="submit" form="form-signup" className="w-full cursor-pointer">
+          <Button
+            type="submit"
+            form="form-signup"
+            className="w-full cursor-pointer"
+          >
             Registrarse
           </Button>
         </Field>

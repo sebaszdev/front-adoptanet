@@ -1,22 +1,21 @@
-import { Outlet } from "react-router";
-import Footer from "@/components/Footer";
-import Navbar from "./components/Navbar";
-import { Button } from "@/components/ui/button";
-import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
-import { Link } from "react-router";
-import logo from "@/assets/logo.png";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import { useAuth } from "@/context/useAuth";
 import { UserRound } from "lucide-react";
+import { Link, Outlet } from "react-router";
+import logo from "@/assets/logo.png";
+import Footer from "@/components/Footer";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+} from "@/components/ui/button-group";
 import { Separator } from "@/components/ui/separator";
 import { Toaster } from "@/components/ui/sonner";
+import { useAuth } from "@/context/useAuth";
+import Navbar from "./components/Navbar";
 
 const Layout = () => {
   const { user, logout } = useAuth();
+
   return (
     <>
       <header className="flex justify-between py-3 px-10 border-b-2 shadow-sm">
@@ -29,16 +28,18 @@ const Layout = () => {
           </Link>
           <Navbar />
         </div>
-        { user ? (
+        {user ? (
           <div className="flex gap-x-2">
             <div className="flex flex-wrap gap-x-2 content-center">
               <UserRound />
-              <p className="leading-7">
-                {user.nombre}
-              </p>
+              <p className="leading-7">{user.nombre}</p>
             </div>
             <Separator orientation="vertical" className="bg-foreground" />
-            <Button variant="destructive" onClick={logout} className="cursor-pointer">
+            <Button
+              variant="destructive"
+              onClick={logout}
+              className="cursor-pointer"
+            >
               Cerrar sesión
             </Button>
           </div>
@@ -58,9 +59,9 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
-      <Toaster richColors/>
+      <Toaster richColors />
     </>
   );
-}
+};
 
 export default Layout;

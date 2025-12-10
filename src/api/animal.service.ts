@@ -1,32 +1,20 @@
-import * as z from "zod";
-import { CreateAnimalSchema } from "@/schemas/animalSchema";
+import type * as z from "zod";
 import { apiFetch } from "@/api/client";
+import type { CreateAnimalSchema } from "@/schemas/animalSchema";
 
 export const AnimalService = {
-  createAnimal: async (data: z.infer<typeof CreateAnimalSchema>, token: string) => {
-    try {
-      return await apiFetch("/RegistrarAnimal", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-    } catch (err) {
-      throw err;
-    }
-  },
+  createAnimal: async (
+    data: z.infer<typeof CreateAnimalSchema>,
+    token: string,
+  ) =>
+    apiFetch("/RegistrarAnimal", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 
-  listAnimals: async (token: string) => {
-    try {
-      return await apiFetch("/ListarAnimales", {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-    } catch (err) {
-      throw err;
-    }
-  },
-}
+  listAnimals: () => apiFetch("/ListarAnimales"),
+};
