@@ -3,11 +3,13 @@ import { toast } from "sonner";
 import type * as z from "zod";
 import { AuthService } from "@/api/auth.service";
 import signupImg from "@/assets/signup-img.jpg";
-import Form from "@/components/Form";
+import EntidadForm from "@/components/EntidadForm";
+import PublicanteForm from "@/components/PublicanteForm";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/context/useAuth";
 import type { EntidadSchema, PublicanteSchema } from "@/schemas/userSchema";
+import { ApiError } from "@/api/client";
 
 const Signup = () => {
   const { login, isAuthenticated } = useAuth();
@@ -24,12 +26,16 @@ const Signup = () => {
         navigate("/");
       }
     } catch (err) {
+      console.error(err);
       if (err instanceof TypeError && err.message === "Failed to fetch")
         toast.error("Error con la API");
+      if (err instanceof ApiError && err.status === 400 && err.detail === "El correo ya está registrado")
+        toast.error("Correo ya registrado");
     }
   };
 
   const onSubmitEntidad = async (data: z.infer<typeof EntidadSchema>) => {
+    console.log(data);
     try {
       const res = await AuthService.registerEntidad(data);
       // se hizo el registro
@@ -42,6 +48,8 @@ const Signup = () => {
     } catch (err) {
       if (err instanceof TypeError && err.message === "Failed to fetch")
         toast.error("Error con la API");
+      if (err instanceof ApiError && err.status === 400 && err.detail === "El correo ya está registrado")
+        toast.error("Correo ya registrado");
     }
   };
 
@@ -62,10 +70,10 @@ const Signup = () => {
               <TabsTrigger value="entidad">Entidad</TabsTrigger>
             </TabsList>
             <TabsContent value="publicante">
-              <Form rol="publicante" onSubmit={onSubmitPublicante} />
+              <PublicanteForm onSubmit={onSubmitPublicante} />
             </TabsContent>
             <TabsContent value="entidad">
-              <Form rol="entidad" onSubmit={onSubmitEntidad} />
+              <EntidadForm onSubmit={onSubmitEntidad} />
             </TabsContent>
           </Tabs>
           <div className="text-center">

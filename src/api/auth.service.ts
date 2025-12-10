@@ -16,26 +16,26 @@ export const AuthService = {
 
     return apiFetch<{ access_token: string; token_type: string }>("/token", {
       method: "POST",
-      body: form,
+      body: form, // esto es por q el login pide "Content-Type": "application/x-www-form-urlencoded" y URLSearchParams le dice al fetch q ese sera el header
     });
   },
 
   registerPublicante: (data: z.infer<typeof PublicanteSchema>) =>
     apiFetch<z.infer<typeof ResponseEntidadSchema>>("/CreatePublicante", {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(data),
     }),
 
   registerEntidad: (data: z.infer<typeof EntidadSchema>) =>
     apiFetch<z.infer<typeof ResponsePublicanteSchema>>("/CreateEntidad", {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(data),
     }),
 
   me: (token: string) =>

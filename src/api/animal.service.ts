@@ -9,11 +9,11 @@ export const AnimalService = {
   ) =>
     apiFetch("/RegistrarAnimal", {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(data),
     }),
 
   listAnimals: () => apiFetch("/ListarAnimales"),

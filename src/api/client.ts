@@ -26,7 +26,7 @@ export const apiFetch = async <T>(
 
   if (!res.ok) {
     const err = await res.json().catch(() => {});
-    throw new ApiError(res.status, err);
+    throw new ApiError(res.status, err.detail); // err.detail es un json/objeto que contiene los detalles del error
   }
 
   return res.json();

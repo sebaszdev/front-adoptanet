@@ -12,46 +12,35 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Field,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { EntidadSchema, PublicanteSchema } from "@/schemas/userSchema";
+import { EntidadSchema } from "@/schemas/userSchema";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-interface EntidadProps {
-  rol: "entidad";
+interface Props {
   onSubmit: (data: z.infer<typeof EntidadSchema>) => Promise<void>;
 }
 
-interface PublicanteProps {
-  rol: "publicante";
-  onSubmit: (data: z.infer<typeof PublicanteSchema>) => Promise<void>;
-}
 
-const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
-  const schema = rol === "publicante" ? PublicanteSchema : EntidadSchema;
-  const doc = rol === "publicante" ? "cc" : "nit";
-
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+const EntidadForm = ({ onSubmit }: Props) => {
+  const { handleSubmit, control } = useForm<z.infer<typeof EntidadSchema>>({
+    resolver: zodResolver(EntidadSchema),
     defaultValues:
-      rol === "publicante"
-        ? {
-            nombre: "",
-            correo: "",
-            telefono: "",
-            direccion: "",
-            cc: "",
-            contrasena: "",
-          }
-        : {
+        {
             nombre: "",
             correo: "",
             telefono: "",
             direccion: "",
             nit: "",
+            descripcion: "",
             contrasena: "",
+            tipo_organizacion: "albergue",
           },
   });
 
@@ -64,11 +53,12 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form id="form-signup" onSubmit={form.handleSubmit(onSubmit as any)}>
-          <FieldGroup className="gap-4">
+        <form id="form-signup" onSubmit={handleSubmit(onSubmit)}>
+          <FieldSet>
+          <FieldGroup>
             <Controller
               name="nombre"
-              control={form.control}
+              control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-signup-nombre">Nombre</FieldLabel>
@@ -86,7 +76,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
             />
             <Controller
               name="correo"
-              control={form.control}
+              control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-signup-correo">
@@ -107,7 +97,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
             />
             <Controller
               name="telefono"
-              control={form.control}
+              control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-signup-telefono">
@@ -127,7 +117,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
             />
             <Controller
               name="direccion"
-              control={form.control}
+              control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-signup-direccion">
@@ -146,16 +136,16 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
               )}
             />
             <Controller
-              name={doc}
-              control={form.control}
+              name="nit"
+              control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={`form-signup-${doc}`}>
-                    {doc.toUpperCase()}
+                  <FieldLabel htmlFor="form-signup-nit">
+                    NIT
                   </FieldLabel>
                   <Input
                     {...field}
-                    id={`form-signup-${doc}`}
+                    id="form-signup-nit"
                     aria-invalid={fieldState.invalid}
                     className="rounded-lg"
                   />
@@ -166,8 +156,52 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
               )}
             />
             <Controller
+              name="descripcion"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-signup-descripcion">Descripcion</FieldLabel>
+                  <Textarea
+                    {...field}
+                    id="form-signup-descripcion"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Cuentanos sobre ti"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="tipo_organizacion"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel>Tipo</FieldLabel>
+                  <FieldDescription>Selecciona el tipo de tu organizacion</FieldDescription>
+                  <Select value={field.value} onValueChange={field.onChange} >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectContent>
+                          <SelectItem value="albergue">Albergue</SelectItem>
+                          <SelectItem value="fundacion">Fundacion</SelectItem>
+                        </SelectContent>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
               name="contrasena"
-              control={form.control}
+              control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-signup-contrasena">
@@ -186,6 +220,7 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
               )}
             />
           </FieldGroup>
+          </FieldSet>
         </form>
       </CardContent>
       <CardFooter>
@@ -203,4 +238,4 @@ const Form = ({ rol, onSubmit }: PublicanteProps | EntidadProps) => {
   );
 };
 
-export default Form;
+export default EntidadForm;
