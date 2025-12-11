@@ -129,7 +129,7 @@ const Login = () => {
                 <Button
                   type="submit"
                   form="form-login"
-                  className="w-full cursor-pointer"
+                  className="w-full cursor-pointer active:scale-95"
                 >
                   Iniciar Sesión
                 </Button>

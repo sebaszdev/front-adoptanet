@@ -19,7 +19,7 @@ interface AnimalProps {
 
 const AnimalCard = ({ animal }: AnimalProps) => {
   return (
-    <Card className="w-full max-w-lg">
+    <Card className="w-full max-w-md">
       <CardHeader className="relative">
         {animal.adoptado ? (
           <Badge className="absolute top-2 right-8 z-1">Adoptado</Badge>
@@ -37,7 +37,7 @@ const AnimalCard = ({ animal }: AnimalProps) => {
         </AspectRatio>
         <div className="flex items-center gap-x-2">
           <CardTitle>{animal.nombre}</CardTitle>
-          <Badge variant="outline">{animal.sexo}</Badge>
+          <Badge variant="outline">{animal.sexo.charAt(0).toUpperCase() + animal.sexo.slice(1)}</Badge>
         </div>
         <CardDescription>
           {animal.especie} - {animal.raza}
@@ -54,7 +54,7 @@ const AnimalCard = ({ animal }: AnimalProps) => {
         {animal.descripcion && <p>{animal.descripcion}</p>}
       </CardContent>
       <CardFooter>
-        <Button className="w-full">
+        <Button className="w-full cursor-pointer active:scale-95">
           {animal.adoptado ? "Ver información" : "Adoptar"}
         </Button>
       </CardFooter>

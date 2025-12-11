@@ -27,15 +27,14 @@ interface Props {
 const PublicanteForm = ({ onSubmit }: Props) => {
   const { handleSubmit, control } = useForm<z.infer<typeof PublicanteSchema>>({
     resolver: zodResolver(PublicanteSchema),
-    defaultValues:
-        {
-            nombre: "",
-            correo: "",
-            telefono: "",
-            direccion: "",
-            cc: "",
-            contrasena: "",
-          },
+    defaultValues: {
+      nombre: "",
+      correo: "",
+      telefono: "",
+      direccion: "",
+      cc: "",
+      contrasena: "",
+    },
   });
 
   return (
@@ -49,128 +48,126 @@ const PublicanteForm = ({ onSubmit }: Props) => {
       <CardContent>
         <form id="form-signup" onSubmit={handleSubmit(onSubmit)}>
           <FieldSet>
-          <FieldGroup> 
-            <Controller
-              name="nombre"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-signup-nombre">Nombre</FieldLabel>
-                  <Input
-                    {...field}
-                    id="form-signup-nombre"
-                    aria-invalid={fieldState.invalid}
-                    className="rounded-lg"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="correo"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-signup-correo">
-                    Correo electronico
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="form-signup-correo"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="usuario@ejemplo.com"
-                    className="rounded-lg"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="telefono"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-signup-telefono">
-                    Telefono
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="form-signup-telefono"
-                    aria-invalid={fieldState.invalid}
-                    className="rounded-lg"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="direccion"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-signup-direccion">
-                    Direccion
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="form-signup-direccion"
-                    aria-invalid={fieldState.invalid}
-                    className="rounded-lg"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="cc"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={`form-signup-cc`}>
-                    CC
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id={`form-signup-cc`}
-                    aria-invalid={fieldState.invalid}
-                    className="rounded-lg"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              name="contrasena"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-signup-contrasena">
-                    Contraseña
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="form-signup-contrasena"
-                    aria-invalid={fieldState.invalid}
-                    className="rounded-lg"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-          </FieldGroup>
-        </FieldSet>
+            <FieldGroup>
+              <Controller
+                name="nombre"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-signup-nombre">Nombre</FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-signup-nombre"
+                      aria-invalid={fieldState.invalid}
+                      className="rounded-lg"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="correo"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-signup-correo">
+                      Correo electronico
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-signup-correo"
+                      aria-invalid={fieldState.invalid}
+                      placeholder="usuario@ejemplo.com"
+                      className="rounded-lg"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="telefono"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-signup-telefono">
+                      Telefono
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-signup-telefono"
+                      aria-invalid={fieldState.invalid}
+                      className="rounded-lg"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="direccion"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-signup-direccion">
+                      Direccion
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-signup-direccion"
+                      aria-invalid={fieldState.invalid}
+                      className="rounded-lg"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="cc"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={`form-signup-cc`}>CC</FieldLabel>
+                    <Input
+                      {...field}
+                      id={`form-signup-cc`}
+                      aria-invalid={fieldState.invalid}
+                      className="rounded-lg"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="contrasena"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-signup-contrasena">
+                      Contraseña
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id="form-signup-contrasena"
+                      aria-invalid={fieldState.invalid}
+                      className="rounded-lg"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            </FieldGroup>
+          </FieldSet>
         </form>
       </CardContent>
       <CardFooter>
@@ -178,7 +175,7 @@ const PublicanteForm = ({ onSubmit }: Props) => {
           <Button
             type="submit"
             form="form-signup"
-            className="w-full cursor-pointer"
+            className="w-full cursor-pointer active:scale-95"
           >
             Registrarse
           </Button>

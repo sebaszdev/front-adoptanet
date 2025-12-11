@@ -2,6 +2,7 @@ import { Link, Navigate, useNavigate } from "react-router";
 import { toast } from "sonner";
 import type * as z from "zod";
 import { AuthService } from "@/api/auth.service";
+import { ApiError } from "@/api/client";
 import signupImg from "@/assets/signup-img.jpg";
 import EntidadForm from "@/components/EntidadForm";
 import PublicanteForm from "@/components/PublicanteForm";
@@ -9,7 +10,6 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/context/useAuth";
 import type { EntidadSchema, PublicanteSchema } from "@/schemas/userSchema";
-import { ApiError } from "@/api/client";
 
 const Signup = () => {
   const { login, isAuthenticated } = useAuth();
@@ -26,10 +26,13 @@ const Signup = () => {
         navigate("/");
       }
     } catch (err) {
-      console.error(err);
       if (err instanceof TypeError && err.message === "Failed to fetch")
         toast.error("Error con la API");
-      if (err instanceof ApiError && err.status === 400 && err.detail === "El correo ya está registrado")
+      if (
+        err instanceof ApiError &&
+        err.status === 400 &&
+        err.detail === "El correo ya está registrado"
+      )
         toast.error("Correo ya registrado");
     }
   };
@@ -48,7 +51,11 @@ const Signup = () => {
     } catch (err) {
       if (err instanceof TypeError && err.message === "Failed to fetch")
         toast.error("Error con la API");
-      if (err instanceof ApiError && err.status === 400 && err.detail === "El correo ya está registrado")
+      if (
+        err instanceof ApiError &&
+        err.status === 400 &&
+        err.detail === "El correo ya está registrado"
+      )
         toast.error("Correo ya registrado");
     }
   };

@@ -8,7 +8,7 @@ export const AnimalSchema = z.object({
   especie: z.string().min(4).max(20),
   raza: z.string().min(4).max(20),
   edad: z.number().optional(),
-  sexo: z.enum(["Macho", "Hembra"]),
+  sexo: z.enum(["macho", "hembra"]),
   descripcion: z.string().min(1).max(100).optional(),
   imagen: z.string(),
   adoptado: z.boolean().optional(),

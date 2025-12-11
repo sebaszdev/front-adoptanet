@@ -9,6 +9,7 @@ import { useAuth } from "@/context/useAuth";
 
 const Navbar = () => {
   const { isAuthenticated } = useAuth();
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -17,10 +18,10 @@ const Navbar = () => {
             <Link to="/catalog">Catalogo</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        {isAuthenticated && (
+        { isAuthenticated && (
           <NavigationMenuItem>
             <NavigationMenuLink asChild className="rounded-lg">
-              <Link to="/animals">Animals</Link>
+              <Link to="/animals">Animales</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         )}

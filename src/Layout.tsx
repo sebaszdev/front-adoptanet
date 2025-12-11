@@ -1,5 +1,5 @@
-import { UserRound } from "lucide-react";
-import { Link, Outlet } from "react-router";
+import { Cat, LogOut, Menu, UserRound, UserRoundCog } from "lucide-react";
+import { Link, useNavigate, Outlet } from "react-router";
 import logo from "@/assets/logo.png";
 import Footer from "@/components/Footer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,10 +11,12 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Toaster } from "@/components/ui/sonner";
 import { useAuth } from "@/context/useAuth";
-import Navbar from "./components/Navbar";
+import Navbar from "@/components/Navbar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Layout = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -30,26 +32,34 @@ const Layout = () => {
         </div>
         {user ? (
           <div className="flex gap-x-2">
-            <div className="flex flex-wrap gap-x-2 content-center">
+            <div className="flex flex-wrap gap-x-2 items-center">
               <UserRound />
               <p className="leading-7">{user.nombre}</p>
             </div>
             <Separator orientation="vertical" className="bg-foreground" />
-            <Button
-              variant="destructive"
-              onClick={logout}
-              className="cursor-pointer"
-            >
-              Cerrar sesión
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon-sm" className="cursor-pointer my-auto">
+                  <Menu />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end">
+                <DropdownMenuLabel>Hola {user.nombre}</DropdownMenuLabel>
+                <DropdownMenuItem className="justify-between cursor-pointer">Perfil<UserRoundCog /></DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="justify-between cursor-pointer" onSelect={() => navigate("/animals", { replace: true })}>Publicar un animal<Cat /></DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="justify-between cursor-pointer" onSelect={logout}>Cerrar sesión<LogOut /></DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         ) : (
           <ButtonGroup>
-            <Button className="hover:bg-accent">
+            <Button className="hover:bg-accent active:scale-95" asChild>
               <Link to="/signup">Registrarse</Link>
             </Button>
             <ButtonGroupSeparator />
-            <Button className="hover:bg-accent">
+            <Button className="hover:bg-accent active:scale-95" asChild>
               <Link to="/login">Iniciar sesión</Link>
             </Button>
           </ButtonGroup>

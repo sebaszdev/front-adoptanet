@@ -8,9 +8,9 @@
 > [!INFO] HU-01 | HU-02
 - [x] Iniciar sesion
 > [!INFO] HU-03
-- [-] Publicar un animal
+- [x] Publicar un animal
 > [!INFO] HU-04
-- [-] Visualizar el catalogo completo
+- [x] Visualizar el catalogo completo
 > [!INFO] HU-05
 - [-] Ver info detallada del animal
 > [!INFO] HU-06

@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(t);
 
     const me = await AuthService.me(t);
+    me["contrasena"] = contrasena; // guardar la contrasena normal no la hasheada
     setUser(me);
     setLoading(false);
   };

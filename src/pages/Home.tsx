@@ -1,4 +1,4 @@
-import { Dog, UserRoundCheck, UserRoundPlus } from "lucide-react";
+import { Cat, Dog, Mail, UserRoundCheck, UserRoundPlus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 import acc1Img from "@/assets/acc-1-img.jpeg";
@@ -50,6 +50,30 @@ const Home = () => {
     },
   ];
 
+  const authenticatedCards = [
+    {
+      icon: <Dog size={64} color="#733E04" className="mx-auto" />,
+      title: "Explora nuestro catalogo de animales",
+      body: "Explora nuestro catalogo de animales para encontrar a tu proximo compañero de vida",
+      route: "/catalog",
+      button: "Ir a catalogo",
+    },
+    {
+      icon: <Cat size={64} color="#1E66F5" className="mx-auto" />,
+      title: "Publica un animal",
+      body: "Publica un animal para que muchas personas puedan verlo y adoptarlo",
+      route: "/animals",
+      button: "Publicar un animal",
+    },
+    {
+      icon: <Mail size={64} color="#D20F39" className="mx-auto" />,
+      title: "Revisa tus solicitudes",
+      body: "Revisa las solicitudes que las personas interesadas hacen a tus animales publicados",
+      route: "/animals",
+      button: "Revisar solicitudes",
+    },
+  ];
+
   const accordionHandler = (value: "acc-1" | "acc-2" | "acc-3") => {
     setAccItem(value);
   };
@@ -57,7 +81,7 @@ const Home = () => {
   return (
     <>
       <div className="w-full">
-        <AspectRatio ratio={4 / 1} className="w-full">
+        <AspectRatio ratio={4 / 1}> 
           <div
             className="w-full h-full flex flex-col flex-wrap justify-end pb-10
               bg-cover bg-no-repeat bg-center border-b-10"
@@ -77,7 +101,7 @@ const Home = () => {
           cards.map(card => (
             <Card
               key={card.title}
-              className="w-full max-w-sm flex flex-col justify-between"
+              className="w-full max-w-sm flex flex-col justify-between hover:-translate-y-2"
             >
               <CardHeader>{card.icon}</CardHeader>
               <CardContent>
@@ -89,14 +113,34 @@ const Home = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Button className="w-full">
+                <Button className="w-full active:scale-95" asChild>
                   <Link to={card.route}>{card.button}</Link>
                 </Button>
               </CardFooter>
             </Card>
           ))
         ) : (
-          <p>Autenticado</p>
+            authenticatedCards.map(card => (
+              <Card
+                key={card.title}
+                className="w-full max-w-sm flex flex-col justify-between hover:-translate-y-2"
+              >
+                <CardHeader>{card.icon}</CardHeader>
+                <CardContent>
+                  <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
+                    {card.title}
+                  </h2>
+                  <p className="leading-7 text-center [&:not(:first-child)]:mt-6">
+                    {card.body}
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Button className="w-full active:scale-95" asChild>
+                    <Link to={card.route}>{card.button}</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))
         )}
       </section>
       <section className="py-10 flex flex-col gap-y-10">

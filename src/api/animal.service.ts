@@ -1,13 +1,13 @@
 import type * as z from "zod";
 import { apiFetch } from "@/api/client";
-import type { CreateAnimalSchema } from "@/schemas/animalSchema";
+import { AnimalSchema, type CreateAnimalSchema } from "@/schemas/animalSchema";
 
 export const AnimalService = {
   createAnimal: async (
     data: z.infer<typeof CreateAnimalSchema>,
     token: string,
   ) =>
-    apiFetch("/RegistrarAnimal", {
+    apiFetch<z.infer<typeof AnimalSchema>>("/RegistrarAnimal", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,5 +16,5 @@ export const AnimalService = {
       body: JSON.stringify(data),
     }),
 
-  listAnimals: () => apiFetch("/ListarAnimales"),
+  listAnimals: () => apiFetch<z.infer<typeof AnimalSchema>[]>("/ListarAnimales"),
 };
