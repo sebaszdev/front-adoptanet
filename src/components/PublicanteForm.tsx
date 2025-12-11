@@ -18,15 +18,15 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { PublicanteSchema } from "@/schemas/userSchema";
+import { CreatePublicanteSchema } from "@/schemas/userSchema";
 
 interface Props {
-  onSubmit: (data: z.infer<typeof PublicanteSchema>) => Promise<void>;
+  onSubmit: (data: z.infer<typeof CreatePublicanteSchema>) => Promise<void>;
 }
 
 const PublicanteForm = ({ onSubmit }: Props) => {
-  const { handleSubmit, control } = useForm<z.infer<typeof PublicanteSchema>>({
-    resolver: zodResolver(PublicanteSchema),
+  const { handleSubmit, control } = useForm<z.infer<typeof CreatePublicanteSchema>>({
+    resolver: zodResolver(CreatePublicanteSchema),
     defaultValues: {
       nombre: "",
       correo: "",
