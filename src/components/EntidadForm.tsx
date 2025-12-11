@@ -27,15 +27,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { EntidadSchema } from "@/schemas/userSchema";
+import { CreateEntidadSchema } from "@/schemas/userSchema";
 
 interface Props {
-  onSubmit: (data: z.infer<typeof EntidadSchema>) => Promise<void>;
+  onSubmit: (data: z.infer<typeof CreateEntidadSchema>) => Promise<void>;
 }
 
 const EntidadForm = ({ onSubmit }: Props) => {
-  const { handleSubmit, control } = useForm<z.infer<typeof EntidadSchema>>({
-    resolver: zodResolver(EntidadSchema),
+  const { handleSubmit, control } = useForm<z.infer<typeof CreateEntidadSchema>>({
+    resolver: zodResolver(CreateEntidadSchema),
     defaultValues: {
       nombre: "",
       correo: "",

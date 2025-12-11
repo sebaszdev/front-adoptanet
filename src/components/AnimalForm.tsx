@@ -25,18 +25,22 @@ interface Props {
 }
 
 const AnimalForm = ({ onSubmit }: Props) => {
-  const { handleSubmit, control } = useForm<z.infer<typeof CreateAnimalSchema>>({
+  const dogBreeds = ["labrador", "golden_retriever", "pastor_aleman", "bulldog", "beagle", "chihuahua", "poodle", "otro"];
+  const catBreeds = ["persa", "siames", "maine_coon", "bengali", "ragdoll", "british_shorthair", "esfinge", "otro"];
+
+  const { handleSubmit, control, watch } = useForm<z.infer<typeof CreateAnimalSchema>>({
     resolver: zodResolver(CreateAnimalSchema),
     defaultValues: {
       descripcion: "",
       edad: 0,
-      especie: "",
-      imagen: "",
-      raza: "",
+      especie: "perro",
       nombre: "",
       sexo: "macho"
     },
   });
+
+  const especie = watch("especie");
+  const breeds = especie === "perro" ? dogBreeds : catBreeds;
 
   return (
     <Card className="mt-6">
@@ -66,11 +70,15 @@ const AnimalForm = ({ onSubmit }: Props) => {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="form-animal-especie">Especie</FieldLabel>
-              <Input
-                {...field}
-                id="form-animal-especie"
-                aria-invalid={fieldState.invalid}
-              />
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="perro">Perro</SelectItem>
+                  <SelectItem value="gato">Gato</SelectItem>
+                </SelectContent>
+              </Select>
               {fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
               )}
@@ -80,14 +88,22 @@ const AnimalForm = ({ onSubmit }: Props) => {
         <Controller
           name="raza"
           control={control}
+          rules={{ required: true }}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-animal-raza">Raza</FieldLabel>
-              <Input
-                {...field}
-                id="form-animal-raza"
-                aria-invalid={fieldState.invalid}
-              />
+              <FieldLabel>Raza</FieldLabel>
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona una raza" />
+                </SelectTrigger>
+                <SelectContent>
+                  {breeds.map(breed => (
+                    <SelectItem key={breed} value={breed}>
+                      {breed}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               {fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
               )}
@@ -105,7 +121,7 @@ const AnimalForm = ({ onSubmit }: Props) => {
                 id="form-animal-edad"
                 aria-invalid={fieldState.invalid}
                 type="number"
-                onChange={e => field.onChange(e.target.value === "" ? 0 : Number(e.target.value))}
+                onChange={e => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
               />
               {fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
@@ -155,6 +171,7 @@ const AnimalForm = ({ onSubmit }: Props) => {
         <Controller
           name="imagen"
           control={control}
+          rules={{ required: true, }}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="form-animal-imagen">Imagen</FieldLabel>
