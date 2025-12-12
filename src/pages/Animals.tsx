@@ -1,13 +1,15 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PawPrint, Inbox } from "lucide-react";
+import { Inbox, PawPrint } from "lucide-react";
 import AnimalTab from "@/components/AnimalTab";
-import Applications from "@/components/ApplicationsTab";
+import ApplicationsTab from "@/components/ApplicationsTab";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Animals = () => {
   return (
     <div className="mx-auto px-4 py-8 max-w-6xl">
       <div className="mb-8">
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight text-balance">Panel de Control</h1>
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight text-balance">
+          Panel de Control
+        </h1>
         <p className="text-muted-foreground mt-2">
           Gestiona tus animales y solicitudes de adopción
         </p>
@@ -30,7 +32,7 @@ const Animals = () => {
         </TabsContent>
 
         <TabsContent value="applications" className="mt-6">
-          <Applications />
+          <ApplicationsTab />
         </TabsContent>
       </Tabs>
     </div>

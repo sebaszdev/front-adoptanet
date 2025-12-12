@@ -1,7 +1,7 @@
-import { CreateAnimalSchema } from "@/schemas/animalSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
+import type * as z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
@@ -18,24 +18,45 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { CreateAnimalSchema } from "@/schemas/animalSchema";
 import { Card, CardContent, CardFooter } from "./ui/card";
-import { Button } from "@/components/ui/button";
+
 interface Props {
   onSubmit: (data: z.infer<typeof CreateAnimalSchema>) => Promise<void>;
 }
 
 const AnimalForm = ({ onSubmit }: Props) => {
-  const dogBreeds = ["labrador", "golden_retriever", "pastor_aleman", "bulldog", "beagle", "chihuahua", "poodle", "otro"];
-  const catBreeds = ["persa", "siames", "maine_coon", "bengali", "ragdoll", "british_shorthair", "esfinge", "otro"];
+  const dogBreeds = [
+    "labrador",
+    "golden_retriever",
+    "pastor_aleman",
+    "bulldog",
+    "beagle",
+    "chihuahua",
+    "poodle",
+    "otro",
+  ];
+  const catBreeds = [
+    "persa",
+    "siames",
+    "maine_coon",
+    "bengali",
+    "ragdoll",
+    "british_shorthair",
+    "esfinge",
+    "otro",
+  ];
 
-  const { handleSubmit, control, watch } = useForm<z.infer<typeof CreateAnimalSchema>>({
+  const { handleSubmit, control, watch } = useForm<
+    z.infer<typeof CreateAnimalSchema>
+  >({
     resolver: zodResolver(CreateAnimalSchema),
     defaultValues: {
       descripcion: "",
       edad: 0,
       especie: "perro",
       nombre: "",
-      sexo: "macho"
+      sexo: "macho",
     },
   });
 
@@ -45,150 +66,159 @@ const AnimalForm = ({ onSubmit }: Props) => {
   return (
     <Card className="mt-6">
       <CardContent>
-    <form id="form-animal" onSubmit={handleSubmit(onSubmit)}>
-      <FieldGroup>
-        <Controller
-          name="nombre"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-animal-nombre">Nombre</FieldLabel>
-              <Input
-                {...field}
-                id="form-animal-nombre"
-                aria-invalid={fieldState.invalid}
-              />
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
+        <form id="form-animal" onSubmit={handleSubmit(onSubmit)}>
+          <FieldGroup>
+            <Controller
+              name="nombre"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-animal-nombre">Nombre</FieldLabel>
+                  <Input
+                    {...field}
+                    id="form-animal-nombre"
+                    aria-invalid={fieldState.invalid}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
-          )}
-          />
-        <Controller
-          name="especie"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-animal-especie">Especie</FieldLabel>
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="perro">Perro</SelectItem>
-                  <SelectItem value="gato">Gato</SelectItem>
-                </SelectContent>
-              </Select>
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
+            />
+            <Controller
+              name="especie"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-animal-especie">Especie</FieldLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="perro">Perro</SelectItem>
+                      <SelectItem value="gato">Gato</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-          </Field>
-          )}
-        />
-        <Controller
-          name="raza"
-          control={control}
-          rules={{ required: true }}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Raza</FieldLabel>
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona una raza" />
-                </SelectTrigger>
-                <SelectContent>
-                  {breeds.map(breed => (
-                    <SelectItem key={breed} value={breed}>
-                      {breed}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
+            />
+            <Controller
+              name="raza"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Raza</FieldLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona una raza" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {breeds.map(breed => (
+                        <SelectItem key={breed} value={breed}>
+                          {breed}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
-          )}
-        />
-        <Controller
-          name="edad"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-animal-edad">Edad</FieldLabel>
-              <Input
-                {...field}
-                id="form-animal-edad"
-                aria-invalid={fieldState.invalid}
-                type="number"
-                onChange={e => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}
-              />
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
+            />
+            <Controller
+              name="edad"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-animal-edad">Edad</FieldLabel>
+                  <Input
+                    {...field}
+                    id="form-animal-edad"
+                    aria-invalid={fieldState.invalid}
+                    type="number"
+                    onChange={e =>
+                      field.onChange(
+                        e.target.value === "" ? "" : Number(e.target.value),
+                      )
+                    }
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
-          )}
-        />
-        <Controller
-          name="sexo"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Sexo</FieldLabel>
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="macho">Macho</SelectItem>
-                  <SelectItem value="hembra">Hembra</SelectItem>
-                </SelectContent>
-              </Select>
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
+            />
+            <Controller
+              name="sexo"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Sexo</FieldLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="macho">Macho</SelectItem>
+                      <SelectItem value="hembra">Hembra</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
-          )}
-        />
-        <Controller
-          name="descripcion"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-animal-descripcion">Descripcion</FieldLabel>
-              <Textarea
-                {...field}
-                id="form-animal-descripcion"
-                aria-invalid={fieldState.invalid}
-                placeholder="Ingresa la descripcion del animal"
-              />
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
+            />
+            <Controller
+              name="descripcion"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-animal-descripcion">
+                    Descripcion
+                  </FieldLabel>
+                  <Textarea
+                    {...field}
+                    id="form-animal-descripcion"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Ingresa la descripcion del animal"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
-          )}
-        />
-        <Controller
-          name="imagen"
-          control={control}
-          rules={{ required: true, }}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-animal-imagen">Imagen</FieldLabel>
-              <Input
-                {...field}
-                id="form-animal-imagen"
-                aria-invalid={fieldState.invalid}
-              />
-              <FieldDescription>Por favor ingresa un link valido a una imagen de internet (por ahora)</FieldDescription>
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
+            />
+            <Controller
+              name="imagen"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-animal-imagen">Imagen</FieldLabel>
+                  <Input
+                    {...field}
+                    id="form-animal-imagen"
+                    aria-invalid={fieldState.invalid}
+                  />
+                  <FieldDescription>
+                    Por favor ingresa un link valido a una imagen de internet
+                    (por ahora)
+                  </FieldDescription>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
-          )}
-        />
-      </FieldGroup>
-    </form>
+            />
+          </FieldGroup>
+        </form>
       </CardContent>
       <CardFooter>
         <Field orientation="horizontal">
@@ -201,9 +231,8 @@ const AnimalForm = ({ onSubmit }: Props) => {
           </Button>
         </Field>
       </CardFooter>
-
     </Card>
   );
-}
+};
 
 export default AnimalForm;

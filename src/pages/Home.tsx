@@ -81,7 +81,7 @@ const Home = () => {
   return (
     <>
       <div className="w-full">
-        <AspectRatio ratio={4 / 1}> 
+        <AspectRatio ratio={4 / 1}>
           <div
             className="w-full h-full flex flex-col flex-wrap justify-end pb-10
               bg-cover bg-no-repeat bg-center border-b-10"
@@ -97,30 +97,8 @@ const Home = () => {
         </AspectRatio>
       </div>
       <section className="bg-muted flex flex-wrap justify-center pt-30 pb-20 gap-10">
-        {!isAuthenticated ? (
-          cards.map(card => (
-            <Card
-              key={card.title}
-              className="w-full max-w-sm flex flex-col justify-between hover:-translate-y-2"
-            >
-              <CardHeader>{card.icon}</CardHeader>
-              <CardContent>
-                <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
-                  {card.title}
-                </h2>
-                <p className="leading-7 text-center [&:not(:first-child)]:mt-6">
-                  {card.body}
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Button className="w-full active:scale-95" asChild>
-                  <Link to={card.route}>{card.button}</Link>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))
-        ) : (
-            authenticatedCards.map(card => (
+        {!isAuthenticated
+          ? cards.map(card => (
               <Card
                 key={card.title}
                 className="w-full max-w-sm flex flex-col justify-between hover:-translate-y-2"
@@ -141,7 +119,27 @@ const Home = () => {
                 </CardFooter>
               </Card>
             ))
-        )}
+          : authenticatedCards.map(card => (
+              <Card
+                key={card.title}
+                className="w-full max-w-sm flex flex-col justify-between hover:-translate-y-2"
+              >
+                <CardHeader>{card.icon}</CardHeader>
+                <CardContent>
+                  <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
+                    {card.title}
+                  </h2>
+                  <p className="leading-7 text-center [&:not(:first-child)]:mt-6">
+                    {card.body}
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Button className="w-full active:scale-95" asChild>
+                    <Link to={card.route}>{card.button}</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
       </section>
       <section className="py-10 flex flex-col gap-y-10">
         <h2 className="scroll-m-20 pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">

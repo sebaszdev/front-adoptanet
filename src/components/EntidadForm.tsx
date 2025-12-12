@@ -34,7 +34,9 @@ interface Props {
 }
 
 const EntidadForm = ({ onSubmit }: Props) => {
-  const { handleSubmit, control } = useForm<z.infer<typeof CreateEntidadSchema>>({
+  const { handleSubmit, control } = useForm<
+    z.infer<typeof CreateEntidadSchema>
+  >({
     resolver: zodResolver(CreateEntidadSchema),
     defaultValues: {
       nombre: "",

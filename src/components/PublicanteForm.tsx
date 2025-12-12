@@ -25,7 +25,9 @@ interface Props {
 }
 
 const PublicanteForm = ({ onSubmit }: Props) => {
-  const { handleSubmit, control } = useForm<z.infer<typeof CreatePublicanteSchema>>({
+  const { handleSubmit, control } = useForm<
+    z.infer<typeof CreatePublicanteSchema>
+  >({
     resolver: zodResolver(CreatePublicanteSchema),
     defaultValues: {
       nombre: "",

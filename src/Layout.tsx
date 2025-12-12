@@ -1,18 +1,25 @@
 import { Cat, LogOut, Menu, UserRound, UserRoundCog } from "lucide-react";
-import { Link, useNavigate, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import logo from "@/assets/logo.png";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   ButtonGroup,
   ButtonGroupSeparator,
 } from "@/components/ui/button-group";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { Toaster } from "@/components/ui/sonner";
 import { useAuth } from "@/context/useAuth";
-import Navbar from "@/components/Navbar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Layout = () => {
   const { user, logout } = useAuth();
@@ -45,11 +52,26 @@ const Layout = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuLabel>Hola {user.nombre}</DropdownMenuLabel>
-                <DropdownMenuItem className="justify-between cursor-pointer">Perfil<UserRoundCog /></DropdownMenuItem>
+                <DropdownMenuItem className="justify-between cursor-pointer">
+                  Perfil
+                  <UserRoundCog />
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="justify-between cursor-pointer" onSelect={() => navigate("/animals", { replace: true })}>Publicar un animal<Cat /></DropdownMenuItem>
+                <DropdownMenuItem
+                  className="justify-between cursor-pointer"
+                  onSelect={() => navigate("/animals", { replace: true })}
+                >
+                  Publicar un animal
+                  <Cat />
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="justify-between cursor-pointer" onSelect={logout}>Cerrar sesión<LogOut /></DropdownMenuItem>
+                <DropdownMenuItem
+                  className="justify-between cursor-pointer"
+                  onSelect={logout}
+                >
+                  Cerrar sesión
+                  <LogOut />
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

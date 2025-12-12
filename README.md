@@ -12,11 +12,11 @@
 > [!INFO] HU-04
 - [x] Visualizar el catalogo completo
 > [!INFO] HU-05
-- [-] Ver info detallada del animal
+- [x] Ver info detallada del animal
 > [!INFO] HU-06
 
 ### 2 sprint
-- [-] Enviar solicitud de adopcion
+- [x] Enviar solicitud de adopcion
 > [!INFO] HU-08
 - [-] Revisar solicitudes recibidas
 > [!INFO] HU-09

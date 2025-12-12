@@ -1,6 +1,6 @@
 import type * as z from "zod";
 import { apiFetch } from "@/api/client";
-import { AnimalSchema, type CreateAnimalSchema } from "@/schemas/animalSchema";
+import type { AnimalSchema, CreateAnimalSchema } from "@/schemas/animalSchema";
 
 export const AnimalService = {
   createAnimal: async (
@@ -16,5 +16,6 @@ export const AnimalService = {
       body: JSON.stringify(data),
     }),
 
-  listAnimals: () => apiFetch<z.infer<typeof AnimalSchema>[]>("/ListarAnimales"),
+  listAnimals: () =>
+    apiFetch<z.infer<typeof AnimalSchema>[]>("/ListarAnimales"),
 };

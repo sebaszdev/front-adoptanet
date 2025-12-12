@@ -5,9 +5,9 @@ export const AnimalSchema = z.object({
     .string()
     .min(2, "Minimo 2 caracteres")
     .max(20, "Maximo 20 caracteres"),
-  especie: z.string().min(4).max(20),
-  raza: z.string().min(4).max(20),
-  edad: z.number().optional(),
+  especie: z.enum(["perro", "gato"]),
+  raza: z.string(),
+  edad: z.int().positive().optional(),
   sexo: z.enum(["macho", "hembra"]),
   descripcion: z.string().min(1).max(100).optional(),
   imagen: z.string(),

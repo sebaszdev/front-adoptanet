@@ -9,13 +9,18 @@ import PublicanteForm from "@/components/PublicanteForm";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/context/useAuth";
-import type { EntidadSchema, PublicanteSchema } from "@/schemas/userSchema";
+import type {
+  CreateEntidadSchema,
+  CreatePublicanteSchema,
+} from "@/schemas/userSchema";
 
 const Signup = () => {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const onSubmitPublicante = async (data: z.infer<typeof PublicanteSchema>) => {
+  const onSubmitPublicante = async (
+    data: z.infer<typeof CreatePublicanteSchema>,
+  ) => {
     try {
       const res = await AuthService.registerPublicante(data);
       // se hizo el registro
@@ -37,8 +42,7 @@ const Signup = () => {
     }
   };
 
-  const onSubmitEntidad = async (data: z.infer<typeof EntidadSchema>) => {
-    console.log(data);
+  const onSubmitEntidad = async (data: z.infer<typeof CreateEntidadSchema>) => {
     try {
       const res = await AuthService.registerEntidad(data);
       // se hizo el registro

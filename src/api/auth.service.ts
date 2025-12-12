@@ -1,6 +1,8 @@
 import type * as z from "zod";
 import { apiFetch } from "@/api/client";
 import type {
+  CreateEntidadSchema,
+  CreatePublicanteSchema,
   EntidadSchema,
   LoginSchema,
   PublicanteSchema,
@@ -20,7 +22,7 @@ export const AuthService = {
     });
   },
 
-  registerPublicante: (data: z.infer<typeof PublicanteSchema>) =>
+  registerPublicante: (data: z.infer<typeof CreatePublicanteSchema>) =>
     apiFetch<z.infer<typeof ResponseEntidadSchema>>("/CreatePublicante", {
       method: "POST",
       headers: {
@@ -29,7 +31,7 @@ export const AuthService = {
       body: JSON.stringify(data),
     }),
 
-  registerEntidad: (data: z.infer<typeof EntidadSchema>) =>
+  registerEntidad: (data: z.infer<typeof CreateEntidadSchema>) =>
     apiFetch<z.infer<typeof ResponsePublicanteSchema>>("/CreateEntidad", {
       method: "POST",
       headers: {

@@ -18,7 +18,7 @@ const Navbar = () => {
             <Link to="/catalog">Catalogo</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        { isAuthenticated && (
+        {isAuthenticated && (
           <NavigationMenuItem>
             <NavigationMenuLink asChild className="rounded-lg">
               <Link to="/animals">Animales</Link>

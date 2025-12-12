@@ -8,16 +8,47 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import type { AnimalSchema } from "@/schemas/animalSchema";
 import { AspectRatio } from "./ui/aspect-ratio";
 import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import ApplicationForm from "./ApplicationForm";
+import { ApplicationService } from "@/api/applications.service";
+import type { ApplicationSchema } from "@/schemas/applicationSchema";
+import { toast } from "sonner";
+import { ApiError } from "@/api/client";
 
-interface AnimalProps {
+interface AnimalProps
+ {
   animal: z.infer<typeof AnimalSchema>;
 }
 
 const AnimalCard = ({ animal }: AnimalProps) => {
+  const onSubmit = async (data: z.infer<typeof ApplicationSchema>) => {
+    console.log("hola");
+    try {
+      const { id_animal, id_user } = animal;
+      const res = await ApplicationService.createApplication({...data, id_usuario: id_user!, id_animal: id_animal!});
+      if (res) {
+        toast.success("Solicitud creada con exito");
+      }
+    } catch (err) {
+      if (err instanceof TypeError && err.message === "Failed to fetch")
+        toast.error("Error con la API");
+      if (err instanceof ApiError) {
+          toast.error(err.detail);
+      }
+    }
+  };
+
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="relative">
@@ -31,32 +62,82 @@ const AnimalCard = ({ animal }: AnimalProps) => {
         <AspectRatio ratio={4 / 3} className="rounded-lg">
           <img
             src={animal.imagen}
-            alt="Imagen de perro"
+            alt={animal.nombre}
             className="h-full w-full object-cover rounded-lg"
           />
         </AspectRatio>
         <div className="flex items-center gap-x-2">
           <CardTitle>{animal.nombre}</CardTitle>
-          <Badge variant="outline">{animal.sexo.charAt(0).toUpperCase() + animal.sexo.slice(1)}</Badge>
+          <Badge variant="outline">
+            {animal.sexo.charAt(0).toUpperCase() + animal.sexo.slice(1)}
+          </Badge>
         </div>
-        <CardDescription>
-          {animal.especie} - {animal.raza}
-        </CardDescription>
       </CardHeader>
-      <Separator orientation="horizontal" />
       <CardContent>
-        <p>
-          Edad:{" "}
-          {animal.edad
-            ? `${animal.edad} ${animal.edad > 1 ? "años" : "año"}`
-            : "?"}
-        </p>
-        {animal.descripcion && <p>{animal.descripcion}</p>}
+        <CardDescription>
+          {animal.especie.charAt(0).toUpperCase() + animal.especie.slice(1)} - {animal.raza}
+        </CardDescription>
       </CardContent>
       <CardFooter>
-        <Button className="w-full cursor-pointer active:scale-95">
-          {animal.adoptado ? "Ver información" : "Adoptar"}
-        </Button>
+        <Dialog>
+        <DialogTrigger asChild>
+          <Button className="w-full cursor-pointer active:scale-95">Ver más</Button>
+        </DialogTrigger>
+        <DialogContent className="grid md:grid-cols-2 p-6" style={{ maxWidth: "calc(var(--spacing) * 300)"}}>
+          <div className="p-6 overflow-y-auto">
+          <DialogHeader className="mb-4">
+            <DialogTitle className="text-2xl">{animal.nombre}</DialogTitle>
+            <DialogDescription>Adopta este animal</DialogDescription>
+                <AspectRatio ratio={4 / 3} className="rounded-lg">
+                  <img 
+                    src={animal.imagen} 
+                    alt={animal.nombre} 
+                    className="h-full w-full rounded-lg object-cover"
+                  />
+                </AspectRatio>
+          </DialogHeader>
+          
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-semibold text-lg mb-2">Información General</h4>
+              <div className="space-y-2 text-gray-600">
+                <p><span className="font-medium">Especie:</span> {animal.especie === 'perro' ? '🐕 Perro' : '🐱 Gato'}</p>
+                <p><span className="font-medium">Raza:</span> {animal.raza}</p>
+                {animal.edad && (
+                  <p><span className="font-medium">Edad:</span> {animal.edad} {animal.edad === 1 ? 'año' : 'años'}</p>
+                )}
+                <p><span className="font-medium">Sexo:</span> {animal.sexo === 'macho' ? '♂️ Macho' : '♀️ Hembra'}</p>
+              </div>
+            </div>
+            
+            {animal.descripcion && (
+              <div>
+                <h4 className="font-semibold text-lg mb-2">Descripción</h4>
+                <p className="text-gray-600">{animal.descripcion}</p>
+              </div>
+            )}
+            
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <p className="text-sm text-blue-800">
+                💙 Este animalito está buscando un hogar lleno de amor. 
+                {animal.adoptado ? ' Ya está en proceso de adopción.' : ' ¡Podría ser el tuyo!'}
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Columna derecha - Formulario */}
+        <div className="p-6 overflow-y-auto">
+          <h3 className="text-xl font-semibold mb-2">Solicitud de Adopción</h3>
+          <p className="text-sm text-gray-600 mb-4">
+            Completa el formulario para adoptar a {animal.nombre}
+          </p>
+          
+          <ApplicationForm onSubmit={onSubmit}/>
+        </div>
+        </DialogContent>
+      </Dialog>
       </CardFooter>
     </Card>
   );
