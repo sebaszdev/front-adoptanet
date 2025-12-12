@@ -46,7 +46,6 @@ const EntidadForm = ({ onSubmit }: Props) => {
       nit: "",
       descripcion: "",
       contrasena: "",
-      tipo_organizacion: "albergue",
     },
   });
 
@@ -183,14 +182,21 @@ const EntidadForm = ({ onSubmit }: Props) => {
                 name="tipo_organizacion"
                 control={control}
                 render={({ field, fieldState }) => (
-                  <Field>
-                    <FieldLabel>Tipo</FieldLabel>
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-signup-select">Tipo</FieldLabel>
                     <FieldDescription>
                       Selecciona el tipo de tu organizacion
                     </FieldDescription>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger>
-                        <SelectValue />
+                    <Select
+                      name={field.name}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger
+                        id="form-signup-select"
+                        aria-invalid={fieldState.invalid}
+                      >
+                        <SelectValue placeholder="Selecciona el tipo" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="albergue">Albergue</SelectItem>

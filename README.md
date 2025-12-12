@@ -18,7 +18,7 @@
 ### 2 sprint
 - [x] Enviar solicitud de adopcion
 > [!INFO] HU-08
-- [-] Revisar solicitudes recibidas
+- [x] Revisar solicitudes recibidas
 > [!INFO] HU-09
 
 ### 3 sprint

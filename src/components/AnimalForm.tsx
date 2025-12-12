@@ -54,14 +54,11 @@ const AnimalForm = ({ onSubmit }: Props) => {
     defaultValues: {
       descripcion: "",
       edad: 0,
-      especie: "perro",
       nombre: "",
-      sexo: "macho",
     },
   });
 
   const especie = watch("especie");
-  const breeds = especie === "perro" ? dogBreeds : catBreeds;
 
   return (
     <Card className="mt-6">
@@ -91,9 +88,16 @@ const AnimalForm = ({ onSubmit }: Props) => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-animal-especie">Especie</FieldLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger>
-                      <SelectValue />
+                  <Select
+                    name={field.name}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger
+                      id="form-animal-especie"
+                      aria-invalid={fieldState.invalid}
+                    >
+                      <SelectValue placeholder="Selecciona la especie" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="perro">Perro</SelectItem>
@@ -113,16 +117,26 @@ const AnimalForm = ({ onSubmit }: Props) => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>Raza</FieldLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    disabled={!especie && true}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Selecciona una raza" />
                     </SelectTrigger>
                     <SelectContent>
-                      {breeds.map(breed => (
-                        <SelectItem key={breed} value={breed}>
-                          {breed}
-                        </SelectItem>
-                      ))}
+                      {especie === "perro"
+                        ? dogBreeds.map(breed => (
+                            <SelectItem key={breed} value={breed}>
+                              {breed}
+                            </SelectItem>
+                          ))
+                        : catBreeds.map(breed => (
+                            <SelectItem key={breed} value={breed}>
+                              {breed}
+                            </SelectItem>
+                          ))}
                     </SelectContent>
                   </Select>
                   {fieldState.invalid && (
@@ -159,10 +173,17 @@ const AnimalForm = ({ onSubmit }: Props) => {
               control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Sexo</FieldLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger>
-                      <SelectValue />
+                  <FieldLabel htmlFor="form-animal-sexo">Sexo</FieldLabel>
+                  <Select
+                    name={field.name}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger
+                      id="form-animal-sexo"
+                      aria-invalid={fieldState.invalid}
+                    >
+                      <SelectValue placeholder="Selecciona el sexo" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="macho">Macho</SelectItem>

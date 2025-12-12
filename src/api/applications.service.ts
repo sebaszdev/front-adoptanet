@@ -1,8 +1,14 @@
 import type * as z from "zod";
-import { apiFetch } from "./client";
 import type { ApplicationSchema } from "@/schemas/applicationSchema";
+import { apiFetch } from "./client";
 
 export const ApplicationService = {
+  listApplications: async (token: string) =>
+    apiFetch<z.infer<typeof ApplicationSchema>[]>("/Solicitudes", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
   createApplication: async (data: z.infer<typeof ApplicationSchema>) =>
     apiFetch<z.infer<typeof ApplicationSchema>>("/RegistrarSolicitud", {
       method: "POST",
@@ -11,4 +17,4 @@ export const ApplicationService = {
       },
       body: JSON.stringify(data),
     }),
-}
+};
