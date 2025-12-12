@@ -16,6 +16,6 @@ export const AnimalService = {
       body: JSON.stringify(data),
     }),
 
-  listAnimals: () =>
-    apiFetch<z.infer<typeof AnimalSchema>[]>("/ListarAnimales"),
+  listAnimals: (params?: URLSearchParams) =>
+    apiFetch<z.infer<typeof AnimalSchema>[]>(`/ListarAnimales?${params}`),
 };

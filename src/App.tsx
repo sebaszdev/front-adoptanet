@@ -7,6 +7,7 @@ import NotFound from "@/pages/NotFound";
 import Signup from "@/pages/Signup";
 import ProtectedRoute from "./context/ProtectedRoute";
 import Animals from "./pages/Animals";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -21,6 +22,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Animals />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

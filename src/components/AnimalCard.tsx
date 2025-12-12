@@ -116,7 +116,9 @@ const AnimalCard = ({ animal }: AnimalProps) => {
                       {animal.especie === "perro" ? "🐕 Perro" : "🐱 Gato"}
                     </p>
                     <p>
-                      <span className="font-medium">Raza:</span> {animal.raza}
+                      <span className="font-medium">Raza:</span>{" "}
+                      {animal.raza.charAt(0).toUpperCase() +
+                        animal.raza.slice(1)}
                     </p>
                     {animal.edad && (
                       <p>
@@ -149,7 +151,6 @@ const AnimalCard = ({ animal }: AnimalProps) => {
               </div>
             </div>
 
-            {/* Columna derecha - Formulario */}
             <div className="p-6 overflow-y-auto">
               <h3 className="text-xl font-semibold mb-2">
                 Solicitud de Adopción

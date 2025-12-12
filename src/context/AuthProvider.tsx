@@ -7,6 +7,7 @@ import { AuthContext } from "@/context/AuthContext";
 import type {
   EntidadSchema,
   LoginSchema,
+  ProfileSchema,
   PublicanteSchema,
 } from "@/schemas/userSchema";
 
@@ -42,6 +43,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(false);
   };
 
+  const update = async (data: z.infer<typeof ProfileSchema>, token: string) => {
+    setLoading(true);
+    const res = await AuthService.update(data, token);
+
+    const newUser = { contrasena: user?.contrasena, ...res! };
+    setUser(newUser);
+    setLoading(false);
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       const stored = localStorage.getItem("token");
@@ -70,6 +80,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         token,
         login,
         logout,
+        update,
         loading,
         isAuthenticated: !!token,
       }}

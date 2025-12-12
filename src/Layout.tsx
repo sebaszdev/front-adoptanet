@@ -52,7 +52,10 @@ const Layout = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuLabel>Hola {user.nombre}</DropdownMenuLabel>
-                <DropdownMenuItem className="justify-between cursor-pointer">
+                <DropdownMenuItem
+                  className="justify-between cursor-pointer"
+                  onSelect={() => navigate("/profile", { replace: true })}
+                >
                   Perfil
                   <UserRoundCog />
                 </DropdownMenuItem>

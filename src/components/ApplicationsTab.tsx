@@ -52,7 +52,8 @@ const ApplicationsTab = () => {
                 <div className="space-y-2 flex-1">
                   <div className="flex items-center gap-2">
                     <h3 className="font-semibold text-lg">
-                      {application.nombre_completo}
+                      {application.nombre_completo.charAt(0).toUpperCase() +
+                        application.nombre_completo.slice(1)}
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground">

@@ -22,6 +22,7 @@ export const UserSchema = z.object({
     .string()
     .min(8, "Minimo 8 caracteres")
     .max(20, "Maximo 20 caracteres"),
+  rol: z.enum(["publicante", "entidad"]),
 });
 
 /**
@@ -72,3 +73,20 @@ export const ResponseEntidadSchema = z
     rol: z.literal("entidad"),
   })
   .omit({ contrasena: true });
+
+export const ProfileSchema = z
+  .object({
+    ...UserSchema.shape,
+    nit: z
+      .string()
+      .min(5, "Minimo 5 caracteres")
+      .max(20, "Maximo 20 caracteres"),
+    cc: z
+      .string()
+      .min(5, "Minimo 5 caracteres")
+      .max(20, "Maximo 20 caracteres"),
+    tipo_organizacion: z.enum(["albergue", "fundacion"]),
+    descripcion: z.string().max(100, "Maximo 100 caracteres").optional(),
+  })
+  .omit({ id_usuario: true, contrasena: true, correo: true, rol: true })
+  .partial();

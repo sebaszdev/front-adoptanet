@@ -5,6 +5,7 @@ import type {
   CreatePublicanteSchema,
   EntidadSchema,
   LoginSchema,
+  ProfileSchema,
   PublicanteSchema,
   ResponseEntidadSchema,
   ResponsePublicanteSchema,
@@ -49,4 +50,13 @@ export const AuthService = {
         },
       },
     ),
+  update: (data: z.infer<typeof ProfileSchema>, token: string) =>
+    apiFetch("/users/me", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }),
 };

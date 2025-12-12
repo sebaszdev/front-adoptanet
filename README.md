@@ -22,9 +22,9 @@
 > [!INFO] HU-09
 
 ### 3 sprint
-- [-] Filtrar animales
+- [x] Filtrar animales
 > [!INFO] HU-07
 
 ### 4 sprint
-- [-] Gestionar perfil
+- [x] Gestionar perfil
 > [!INFO] HU-10
