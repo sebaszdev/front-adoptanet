@@ -24,7 +24,7 @@ export const AuthService = {
   },
 
   registerPublicante: (data: z.infer<typeof CreatePublicanteSchema>) =>
-    apiFetch<z.infer<typeof ResponseEntidadSchema>>("/CreatePublicante", {
+    apiFetch<z.infer<typeof ResponsePublicanteSchema>>("/CreatePublicante", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export const AuthService = {
     }),
 
   registerEntidad: (data: z.infer<typeof CreateEntidadSchema>) =>
-    apiFetch<z.infer<typeof ResponsePublicanteSchema>>("/CreateEntidad", {
+    apiFetch<z.infer<typeof ResponseEntidadSchema>>("/CreateEntidad", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

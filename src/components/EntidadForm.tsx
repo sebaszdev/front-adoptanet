@@ -46,6 +46,8 @@ const EntidadForm = ({ onSubmit }: Props) => {
       nit: "",
       descripcion: "",
       contrasena: "",
+      tipo_organizacion: "albergue",
+      rol: "entidad",
     },
   });
 

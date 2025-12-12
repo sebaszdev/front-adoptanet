@@ -36,6 +36,7 @@ const PublicanteForm = ({ onSubmit }: Props) => {
       direccion: "",
       cc: "",
       contrasena: "",
+      rol: "publicante",
     },
   });
 
